@@ -1,75 +1,59 @@
 'use client'
 
 import { supabase } from '@/lib/supabaseClient'
-import { useState, FormEvent, useEffect } from 'react'
-
-// Define the type for a message
-type Message = {
-  id: number
-  content: string
-}
+import { useState, useEffect } from 'react'
 
 export default function Home() {
   const [message, setMessage] = useState<string>('')
-  const [messages, setMessages] = useState<Message[]>([])
+  const [existingMessageId, setExistingMessageId] = useState<number | null>(null)
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    const { error } = await supabase
-      .from<any, any>('messages')
-      .insert([{ content: message }])
-
-    if (error) {
-      console.error(error)
-    } else {
-      setMessage('') // Clear the input field after submission
-    }
-  }
-
+  // Fetch the first row on component mount
   useEffect(() => {
-    const fetchMessages = async () => {
-      const { data, error } = await supabase.from<any, any>('messages').select('*')
+    const fetchFirstMessage = async () => {
+      // Fetch the first message from the `messages` table
+      const { data, error } = await supabase
+        .from('messages')
+        .select('*')
+        .limit(1)
+        .single() // Ensure only one row is fetched
+
       if (error) {
-        console.error(error)
-      } else {
-        setMessages(data || [])
+        console.error('Error fetching message:', error)
+      } else if (data) {
+        // Store the existing message ID and content
+        setExistingMessageId(data.id)
+        setMessage(data.content)
       }
     }
 
-    fetchMessages()
-
-    // Set up a real-time subscription using the Realtime API
-    const channel = supabase
-      .channel('public:messages') // Use the 'public:messages' format to track changes
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, (payload) => {
-        // @ts-ignore
-        setMessages((prevMessages) => [...prevMessages, payload.new])
-      })
-      .subscribe()
-
-    return () => {
-      supabase.removeChannel(channel)
-    }
+    fetchFirstMessage()
   }, [])
+
+  const handleSubmit = async () => {
+    if (existingMessageId) {
+      // Update the first row's content
+      const { error } = await supabase
+        .from('messages')
+        .update({ content: message })
+        .eq('id', existingMessageId) // Ensure we're updating the first row
+
+      if (error) {
+        console.error('Error updating message:', error)
+      } else {
+        alert('Message updated!')
+      }
+    }
+  }
 
   return (
     <div>
-      <h1>Enter a message</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Enter a message"
-        />
-        <button type="submit">Send</button>
-      </form>
-      {messages.map((me) => (
-        <div key={me.id}>
-          {me.content}
-        </div>
-      ))}
+      <h1>Update the first message</h1>
+      <textarea
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        placeholder="Enter a message"
+      />
+      <button onClick={handleSubmit}>Save</button>
     </div>
   )
 }
