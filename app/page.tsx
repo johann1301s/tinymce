@@ -51,7 +51,7 @@ export default function Home() {
       <div style={{display: 'flex', flexDirection: 'column', gap: '24px', padding: '0 24px'}}>
         <Editor
           onChange={(value) => setMessage(value)}
-          value={message || 'laster...'}/>
+          value={message}/>
         <button style={{padding: '10px'}} onClick={handleSubmit}>Save</button>
       </div>
     </div>
