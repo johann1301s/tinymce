@@ -1,48 +1,58 @@
 'use client'
 
-import { useState } from 'react';
-import { Editor } from '@tinymce/tinymce-react';
+import { Editor } from '@/components/editor'
+import { supabase } from '@/lib/supabaseClient'
+import { useState, useEffect } from 'react'
 
 export default function Home() {
-  const [content, setContent] = useState<string>('');
+  const [message, setMessage] = useState<string>('')
+  const [existingMessageId, setExistingMessageId] = useState<number | null>(null)
 
-  const handleEditorChange = (newContent: string) => {
-    setContent(newContent);
-    console.log('Content was updated:', newContent);
-  };
+  // Fetch the first row on component mount
+  useEffect(() => {
+    const fetchFirstMessage = async () => {
+      // Fetch the first message from the `messages` table
+      const { data, error } = await supabase
+        .from('messages')
+        .select('*')
+        .limit(1)
+        .single() // Ensure only one row is fetched
+
+      if (error) {
+        console.error('Error fetching message:', error)
+      } else if (data) {
+        // Store the existing message ID and content
+        setExistingMessageId(data.id)
+        setMessage(data.content)
+      }
+    }
+
+    fetchFirstMessage()
+  }, [])
+
+  const handleSubmit = async () => {
+    if (existingMessageId) {
+      // Update the first row's content
+      const { error } = await supabase
+        .from('messages')
+        .update({ content: message })
+        .eq('id', existingMessageId) // Ensure we're updating the first row
+
+      if (error) {
+        console.error('Error updating message:', error)
+      } else {
+        alert('Message updated!')
+      }
+    }
+  }
 
   return (
     <div>
-      <h1>TinyMCE with FLITE in Next.js</h1>
-      {/* Load the TinyMCE editor with FLITE plugin */}
+      <h1>Update the first message</h1>
       <Editor
-        apiKey={'5mwypg9c08ih4fcpubmb57cavmibsx4ws639q0m85gy6b6hg'}
-        value={content}
-        init={{
-          plugins: [
-            'flite',
-            // Core editing features
-            'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
-            // Your account includes a free trial of TinyMCE premium features
-            // Try the most popular premium features until Nov 7, 2024:
-            'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown',
-          ],
-          toolbar: 'flitefind flitelocate fliteinsert flitetrack fliteedit undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat', // FLITE toolbar buttons
-          tinycomments_mode: 'embedded',
-          tinycomments_author: 'Author name',
-          mergetags_list: [
-            { value: 'First.Name', title: 'First Name' },
-            { value: 'Email', title: 'Email' },
-          ],
-
-          height: 500,
-          menubar: false, // Remove default menubar
-          flite_options: {
-            track_changes: true, // Enable track changes
-          },
-        }}
-        onEditorChange={handleEditorChange}
-      />
+        onChange={(value) => setMessage(value)}
+        value={message || 'laster...'}/>
+      <button onClick={handleSubmit}>Save</button>
     </div>
-  );
+  )
 }
