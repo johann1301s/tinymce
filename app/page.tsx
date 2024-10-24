@@ -27,19 +27,34 @@ export default function Home() {
             // Try the most popular premium features until Nov 7, 2024:
             'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown',
           ],
-          toolbar: 'flitefind flitelocate fliteinsert flitetrack fliteedit undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat', // FLITE toolbar buttons
+          toolbar: 'flitefind flitelocate fliteinsert flitetrack fliteedit undo redo blocks fontfamily fontsize bold italic underline strikethrough link image media table mergetags addcomment showcomments spellcheckdialog a11ycheck typography align lineheight checklist numlist bullist indent outdent emoticons charmap removeformat',
           tinycomments_mode: 'embedded',
-          tinycomments_author: 'Author name',
+          tinycomments_author: 'Johannes Skuterud',
           mergetags_list: [
             { value: 'First.Name', title: 'First Name' },
             { value: 'Email', title: 'Email' },
           ],
 
           height: 500,
-          menubar: false, // Remove default menubar
           flite_options: {
-            track_changes: true, // Enable track changes
+            track_changes: true, // Enable track changes,
+            user: {
+              userId: '3',
+              name: 'Johannes'
+            }
           },
+          flite: {
+            user: {
+              userId: '3',
+              name: 'Johannes'
+            }
+          },
+          setup: (editor) => {
+            editor.on('flite:init', (event) => {
+              console.log('event', event)
+
+            });
+          }
         }}
         onEditorChange={handleEditorChange}
       />
