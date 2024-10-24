@@ -47,11 +47,13 @@ export default function Home() {
   }
 
   return (
-    <div>
-      <Editor
-        onChange={(value) => setMessage(value)}
-        value={message || 'laster...'}/>
-      <button onClick={handleSubmit}>Save</button>
+    <div style={{display: 'flex', justifyContent: 'center', margin: '24px auto'}}>
+      <div style={{display: 'flex', flexDirection: 'column', gap: '24px', padding: '0 24px'}}>
+        <Editor
+          onChange={(value) => setMessage(value)}
+          value={message || 'laster...'}/>
+        <button style={{padding: '10px'}} onClick={handleSubmit}>Save</button>
+      </div>
     </div>
   )
 }

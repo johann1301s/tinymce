@@ -26,8 +26,8 @@ export const Editor = (props: Props) => {
             { value: 'First.Name', title: 'First Name' },
             { value: 'Email', title: 'Email' },
             ],
-
             height: 500,
+            width: '100%',
             menubar: true, 
             flite_options: {
             track_changes: true
