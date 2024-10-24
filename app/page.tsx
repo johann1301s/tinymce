@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
-import Script from 'next/script';
 
 export default function Home() {
   const [content, setContent] = useState<string>('');
@@ -44,9 +43,6 @@ export default function Home() {
         }}
         onEditorChange={handleEditorChange}
       />
-
-      {/* Include the FLITE plugin */}
-      <Script src="https://your-flite-plugin-url/flite-plugin.js" strategy="lazyOnload" />
     </div>
   );
 }
