@@ -48,7 +48,6 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Update the first message</h1>
       <Editor
         onChange={(value) => setMessage(value)}
         value={message || 'laster...'}/>
