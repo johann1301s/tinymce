@@ -16,9 +16,15 @@ export const Editor = (props: Props) => {
         init={{
             width: '1000px',
             plugins: ['tinycomments'],
-            toolbar: 'bold italic | addcomment showcomments',
+            toolbar: [
+                'bold italic',
+                'addcomment showcomments'
+            ],
             tinycomments_mode: 'callback',
             tinycomments_author: 'Ola Nordamnn',
+            tinycomments_fetch: (event: any) => {
+                console.log(event)
+            },
             tinycomments_create: (event: any) => {
                 console.log(event)
             },
