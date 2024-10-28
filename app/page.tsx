@@ -50,20 +50,36 @@ export default function Home() {
   }
 
   return (
-    <div style={{display: 'flex', justifyContent: 'center', margin: '24px auto'}}>
-      <select onChange={({target}) => setActiveUserId(target.value)} value={activeUserId}>
-        {mockUsers.map((user) => (
-          <option key={user.id} value={user.id}>
-            {user.name}
-          </option>
-        ))}
-      </select>
-      <div style={{display: 'flex', flexDirection: 'column', gap: '24px', padding: '0 24px'}}>
-        <Editor
-          onChange={(value) => setMessage(value)}
-          value={message}
-          activeUserId={activeUserId}/>
-        <button style={{padding: '10px'}} onClick={handleSubmit}>Save</button>
+    <div
+      style={{
+        position: 'relative',
+        width: '100%',
+        boxSizing: 'border-box',
+        padding: '24px',
+        display: 'flex',
+        justifyContent: 'center'
+      }}>
+      <div style={{width: '100%', maxWidth: '840px'}}>
+        <div style={{display: 'flex', flexDirection: 'column', gap: '24px', padding: '0 24px'}}>
+          <div style={{alignSelf: 'end', flexGrow: '0'}}>
+            <select onChange={({target}) => setActiveUserId(target.value)} value={activeUserId}>
+              {mockUsers.map((user) => (
+                <option key={user.id} value={user.id}>
+                  {user.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <Editor
+            onChange={(value) => setMessage(value)}
+            value={message}
+            activeUserId={activeUserId}/>
+          <div style={{alignSelf: 'start', flexGrow: '0'}}>
+            <button style={{padding: '10px'}} onClick={handleSubmit}>
+              <b>Save</b>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   )
