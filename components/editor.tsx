@@ -87,8 +87,8 @@ export const Editor = (props: Props) => {
                         'undo redo | blocks | ' +
                         'bold italic forecolor | alignleft aligncenter ' +
                         'alignright alignjustify | bullist numlist outdent indent | ' +
-                        'removeformat | flite | help |',
-                        'addcomment showcomments'
+                        'removeformat | help |',
+                        'addcomment showcomments | flite'
                     ],
                     content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
                     skin: 'COSTUM',
