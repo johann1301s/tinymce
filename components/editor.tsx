@@ -7,6 +7,12 @@ type Props = {
     value: string
 }
 
+const users = [
+	{ id: "18", name: "Syd", picture: "/avatars/syd.png" },
+	{ id: "15", name: "David", picture: "/avatars/david.png" },
+	{ id: "21", name: "Mary", picture: "/avatars/mary.png" }
+];
+
 export const Editor = (props: Props) => {
 
     const conversations = {
@@ -33,9 +39,21 @@ export const Editor = (props: Props) => {
         init={{
             width: '1000px',
             plugins: ['tinycomments'],
+            external_plugins: {
+                flite: "/flite/plugin.min.js",
+            },
+            flite: {
+                users: users.slice(),
+                user: { id: "15" },
+                tooltips: {
+                    template: "%a by %u (on React), last edit %T"
+                },
+    
+            },
             toolbar: [
                 'bold italic',
-                'addcomment showcomments'
+                'addcomment showcomments',
+                'flite'
             ],
             skin: 'COSTUM',
             content_css: "/",
