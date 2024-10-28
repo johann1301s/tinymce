@@ -1,6 +1,7 @@
 'use client'
 
 import { Editor } from '@/components/editor'
+import { minTime } from '@/lib/minTime'
 import { mockUsers } from '@/lib/mockUsers'
 import { supabase } from '@/lib/supabaseClient'
 import { useState, useEffect } from 'react'
@@ -8,10 +9,10 @@ import { useState, useEffect } from 'react'
 export default function Home() {
   const [message, setMessage] = useState<string>('')
   const [existingMessageId, setExistingMessageId] = useState<number | null>(null)
-
   const [activeUserId, setActiveUserId] = useState(mockUsers[0].id)
+  const [savingState, setSavingState] = useState<'default' | 'saving' | 'saved' | 'error'>('default')
 
-  // Fetch the first row on component mount
+
   useEffect(() => {
     const fetchFirstMessage = async () => {
       // Fetch the first message from the `messages` table
@@ -34,17 +35,42 @@ export default function Home() {
   }, [])
 
   const handleSubmit = async () => {
-    if (existingMessageId) {
-      // Update the first row's content
-      const { error } = await supabase
-        .from('messages')
-        .update({ content: message })
-        .eq('id', existingMessageId) // Ensure we're updating the first row
+    const updateMessage = async () => {
+      return supabase
+      .from('messages')
+      .update({ content: message })
+      .eq('id', existingMessageId)
+    }
 
-      if (error) {
-        console.error('Error updating message:', error)
-      } else {
-        alert('Message updated!')
+    setSavingState('saving')
+    const { error } = await minTime(updateMessage(), 1000)
+
+    if (error) {
+      setSavingState('error')
+      setTimeout(() => {
+        setSavingState('default')
+      }, 1000)
+    } else {
+      setSavingState('saved')
+      setTimeout(() => {
+        setSavingState('default')
+      }, 1000)
+    }
+  }
+
+  const getSavingLabel = (state: typeof savingState) => {
+    switch (state) {
+      case 'default': {
+        return 'Lagre'
+      }
+      case 'error': {
+        return 'En feil oppsto'
+      }
+      case 'saved': {
+        return 'Endringen ble lagret!'
+      }
+      case 'saving': {
+        return 'Lagrer...'
       }
     }
   }
@@ -75,8 +101,11 @@ export default function Home() {
             value={message}
             activeUserId={activeUserId}/>
           <div style={{alignSelf: 'start', flexGrow: '0'}}>
-            <button style={{padding: '10px'}} onClick={handleSubmit}>
-              <b>Save</b>
+            <button
+              disabled={!existingMessageId || savingState !== 'default'}
+              style={{padding: '10px'}}
+              onClick={handleSubmit}>
+              <b>{getSavingLabel(savingState)}</b>
             </button>
           </div>
         </div>
