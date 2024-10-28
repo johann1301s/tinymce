@@ -33,7 +33,12 @@ const users: User[] = [
     { id: '15', name: 'Kari Nordmann', picture: '/avatars/mary.png' }
 ];
 
-export const Editor: React.FC = () => {
+type Props = {
+    onChange(value: string): void
+    value: string
+}
+
+export const Editor = (props: Props) => {
     const editorRef = useRef<any>(null);
     const [flite, setFlite] = useState<any>(null);
 
@@ -52,7 +57,7 @@ export const Editor: React.FC = () => {
         plugins: [
             'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
             'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-            'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
+            'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount', 'tinycomments'
         ],
         external_plugins: {
             flite: '/flite/plugin.min.js',
@@ -64,10 +69,13 @@ export const Editor: React.FC = () => {
                 template: '%a by %u (on React), last edit %T'
             },
         },
-        toolbar: 'undo redo | blocks | ' +
+        toolbar: [
+            'undo redo | blocks | ' +
             'bold italic forecolor | alignleft aligncenter ' +
             'alignright alignjustify | bullist numlist outdent indent | ' +
-            'removeformat | flite | help',
+            'removeformat | flite | help |',
+            'addcomment showcomments'
+        ],
         content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
         skin: 'COSTUM',
             content_css: "/",
@@ -108,8 +116,9 @@ export const Editor: React.FC = () => {
                 <TEditor
                     apiKey={'5mwypg9c08ih4fcpubmb57cavmibsx4ws639q0m85gy6b6hg'}
                     onInit={onEditorInited}
-                    initialValue='<p>Welcome to the FLITE integration demo. Edit this text to see change tracking</p>'
+                    value={props.value}
                     init={editorConfig}
+                    onEditorChange={props.onChange}
                 />
             </div>
         </>
