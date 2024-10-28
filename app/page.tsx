@@ -1,12 +1,15 @@
 'use client'
 
 import { Editor } from '@/components/editor'
+import { mockUsers } from '@/lib/mockUsers'
 import { supabase } from '@/lib/supabaseClient'
 import { useState, useEffect } from 'react'
 
 export default function Home() {
   const [message, setMessage] = useState<string>('')
   const [existingMessageId, setExistingMessageId] = useState<number | null>(null)
+
+  const [activeUserId, setActiveUserId] = useState(mockUsers[0].id)
 
   // Fetch the first row on component mount
   useEffect(() => {
@@ -48,10 +51,18 @@ export default function Home() {
 
   return (
     <div style={{display: 'flex', justifyContent: 'center', margin: '24px auto'}}>
+      <select onChange={({target}) => setActiveUserId(target.value)} value={activeUserId}>
+        {mockUsers.map((user) => (
+          <option key={user.id} value={user.id}>
+            {user.name}
+          </option>
+        ))}
+      </select>
       <div style={{display: 'flex', flexDirection: 'column', gap: '24px', padding: '0 24px'}}>
         <Editor
           onChange={(value) => setMessage(value)}
-          value={message}/>
+          value={message}
+          activeUserId={activeUserId}/>
         <button style={{padding: '10px'}} onClick={handleSubmit}>Save</button>
       </div>
     </div>
