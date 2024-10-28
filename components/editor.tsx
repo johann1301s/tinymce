@@ -1,61 +1,75 @@
-'use client';
+'use client'
 
+import React, { useCallback, useRef, useState } from 'react';
 import { Editor as TEditor } from '@tinymce/tinymce-react';
 
-type Props = {
-    onChange(value: string): void
-    value: string
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const conversations = {
+    'id-1': {
+        uid: 'uid-1',
+        comments: [
+            {
+                uid: 'uid-2',
+                author: 'author-1',
+                authorName: 'Kari Nordmann',
+                authorAvatar: 'av-1',
+                content: 'Hey, look! A comment!',
+                createdAt: '2024-10-25T00:00:00Z',
+                modifiedAt: '2024-10-25T00:00:00Z'
+            },
+        ]
+    },
 }
 
-const users = [
-	{ id: "18", name: "Syd", picture: "/avatars/syd.png" },
-	{ id: "15", name: "David", picture: "/avatars/david.png" },
-	{ id: "21", name: "Mary", picture: "/avatars/mary.png" }
+
+type User = {
+    id: string;
+    name: string;
+    picture: string;
+}
+
+const users: User[] = [
+    { id: '18', name: 'Ola Nordmann', picture: '/avatars/david.png' },
+    { id: '15', name: 'Kari Nordmann', picture: '/avatars/mary.png' }
 ];
 
-export const Editor = (props: Props) => {
+export const Editor: React.FC = () => {
+    const editorRef = useRef<any>(null);
+    const [flite, setFlite] = useState<any>(null);
 
-    const conversations = {
-        'id-1': {
-            uid: 'uid-1',
-            comments: [
-                {
-                    uid: 'uid-2',
-                    author: 'author-1',
-                    authorName: 'Kari Nordmann',
-                    authorAvatar: 'av-1',
-                    content: 'Hey, look! A comment!',
-                    createdAt: '2024-10-25T00:00:00Z',
-                    modifiedAt: '2024-10-25T00:00:00Z'
-                },
-            ]
+    const onEditorInited = useCallback((evt: unknown, editor: any) => {
+        editorRef.current = editor;
+        setFlite(editor.plugins.flite);
+        editor.on('flite:init', (event: any) => {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const flite = event.flite;
+        });
+    }, []);
+
+    const [editorConfig] = useState({
+        height: 500,
+        menubar: false,
+        plugins: [
+            'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+            'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+            'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
+        ],
+        external_plugins: {
+            flite: '/flite/plugin.min.js',
         },
-    }
-      
-  return (
-    <TEditor
-        apiKey={'5mwypg9c08ih4fcpubmb57cavmibsx4ws639q0m85gy6b6hg'}
-        value={props.value}
-        init={{
-            width: '1000px',
-            plugins: ['tinycomments'],
-            external_plugins: {
-                flite: "/flite/plugin.min.js",
+        flite: {
+            users: users.slice(),
+            user: { id: '15' }, // can also use simply '15'
+            tooltips: {
+                template: '%a by %u (on React), last edit %T'
             },
-            flite: {
-                users: users.slice(),
-                user: { id: "15" },
-                tooltips: {
-                    template: "%a by %u (on React), last edit %T"
-                },
-    
-            },
-            toolbar: [
-                'bold italic',
-                'addcomment showcomments',
-                'flite'
-            ],
-            skin: 'COSTUM',
+        },
+        toolbar: 'undo redo | blocks | ' +
+            'bold italic forecolor | alignleft aligncenter ' +
+            'alignright alignjustify | bullist numlist outdent indent | ' +
+            'removeformat | flite | help',
+        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+        skin: 'COSTUM',
             content_css: "/",
             skin_url: '/',
             tinycomments_mode: 'callback',
@@ -84,8 +98,21 @@ export const Editor = (props: Props) => {
             tinycomments_edit_comment: (event: any) => {
                 console.log(event);
             }
-          }}
-        onEditorChange={props.onChange}
-    />
-  );
-}
+    });
+
+    return (
+        <>
+            <p className='info'>FLITE version: {flite?.version || '(not loaded yet)'}</p>
+
+            <div className='main'>
+                <TEditor
+                    apiKey={'5mwypg9c08ih4fcpubmb57cavmibsx4ws639q0m85gy6b6hg'}
+                    onInit={onEditorInited}
+                    initialValue='<p>Welcome to the FLITE integration demo. Edit this text to see change tracking</p>'
+                    init={editorConfig}
+                />
+            </div>
+        </>
+    );
+};
+
