@@ -95,7 +95,7 @@ export const Editor = (props: Props) => {
                     content_css: "/",
                     skin_url: '/',
                     tinycomments_mode: 'embedded',
-                    tinycomments_author: users.find(({id}) => props.activeUserId == id)?.name,
+                    tinycomments_author: 'User', // users.find(({id}) => props.activeUserId == id)?.name,
                     tinycomments_fetch: (event: any, done: any) => {
                         done({ conversations });
                     },
