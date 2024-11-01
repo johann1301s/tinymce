@@ -249,10 +249,6 @@ const presets = [{
   id: 2,
   name: 'Fewer tools',
   tools: tools.slice(0, 10)
-}, {
-  id: 3,
-  name: 'Flite only',
-  tools: tools.filter((tool) => tool.includes('flite'))
 }]
 
 const createAllExampleTools = (_id: number) => {
