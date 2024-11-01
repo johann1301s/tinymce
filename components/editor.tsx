@@ -92,34 +92,34 @@ export const Editor = (props: Props) => {
                     ],
                     content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
                     skin: 'COSTUM',
-                        content_css: "/",
-                        skin_url: '/',
-                        tinycomments_mode: 'callback',
-                        tinycomments_author: 'Ola Nordmann',
-                        tinycomments_fetch: (event: any, done: any) => {
-                            done({ conversations });
-                        },
-                        tinycomments_create: (event: any) => {
-                            console.log(event);
-                        },
-                        tinycomments_reply: (event: any) => {
-                            console.log(event);
-                        },
-                        tinycomments_lookup: (event: any) => {
-                            console.log(event);
-                        },
-                        tinycomments_delete: (event: any) => {
-                            console.log(event);
-                        },
-                        tinycomments_delete_all: (event: any) => {
-                            console.log(event);
-                        },
-                        tinycomments_delete_comment: (event: any) => {
-                            console.log(event);
-                        },
-                        tinycomments_edit_comment: (event: any) => {
-                            console.log(event);
-                        }
+                    content_css: "/",
+                    skin_url: '/',
+                    tinycomments_mode: 'embedded',
+                    tinycomments_author: 'Ola Nordmann',
+                    tinycomments_fetch: (event: any, done: any) => {
+                        done({ conversations });
+                    },
+                    tinycomments_create: (event: any) => {
+                        console.log(event);
+                    },
+                    tinycomments_reply: (event: any) => {
+                        console.log(event);
+                    },
+                    tinycomments_lookup: (event: any) => {
+                        console.log(event);
+                    },
+                    tinycomments_delete: (event: any) => {
+                        console.log(event);
+                    },
+                    tinycomments_delete_all: (event: any) => {
+                        console.log(event);
+                    },
+                    tinycomments_delete_comment: (event: any) => {
+                        console.log(event);
+                    },
+                    tinycomments_edit_comment: (event: any) => {
+                        console.log(event);
+                    }
                 }}
                 onEditorChange={props.onChange}
             />
