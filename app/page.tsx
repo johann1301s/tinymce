@@ -128,7 +128,7 @@ export default function Home() {
             </div>
           </div>
           <textarea
-              style={{flexGrow: 1, width: '100%', minHeight: '200px'}}
+              style={{flexGrow: 1, width: '100%', minHeight: '150px', fontSize: '14px'}}
               value={tools.join('\n')}
               onChange={({target}) => setTools(target.value.split('\n'))}/>
           </div>
