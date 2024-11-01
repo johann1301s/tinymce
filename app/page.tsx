@@ -12,6 +12,11 @@ export default function Home() {
   const [activeUserId, setActiveUserId] = useState(mockUsers[0].id)
   const [savingState, setSavingState] = useState<'default' | 'saving' | 'saved' | 'error'>('default')
 
+  const setPreset = (_id: number) => {
+    const newTools = [presets.find(({id}) => id === _id)?.tools.join(' | ') || '']
+
+    setTools(newTools)
+  }
 
   useEffect(() => {
     const fetchFirstMessage = async () => {
@@ -75,7 +80,7 @@ export default function Home() {
     }
   }
 
-  const [tools, setTools] = useState(createExampleTools())
+  const [tools, setTools] = useState(createAllExampleTools(2))
 
   return (
     <div
@@ -104,17 +109,27 @@ export default function Home() {
             value={message}
             activeUserId={activeUserId}/>
           <div style={{display: 'flex', flexDirection: 'column', gap: '24px'}}>
-          <div style={{alignSelf: 'start', flexGrow: '0', gap: '24px', display: 'flex', position: 'relative', width: '100%'}}>
+          <div style={{alignSelf: 'start', justifyContent: 'space-between', flexGrow: '0', gap: '24px', display: 'flex', position: 'relative', width: '100%'}}>
             <button
               disabled={!existingMessageId || savingState !== 'default'}
               style={{padding: '10px'}}
               onClick={handleSubmit}>
               <b>{getSavingLabel(savingState)}</b>
             </button>
+            <div style={{alignSelf: 'start', flexGrow: '0', gap: '24px', display: 'flex'}}>
+              {presets.map((preset) => (
+                <button
+                  key={preset.id}
+                  style={{padding: '10px'}}
+                  onClick={() => setPreset(preset.id)}>
+                  <b>{preset.name}</b>
+                </button>
+              ))}
+            </div>
           </div>
           <textarea
               style={{flexGrow: 1, width: '100%', minHeight: '200px'}}
-              value={tools.join('\n')}
+              value={tools}
               onChange={({target}) => setTools(target.value.split('\n'))}/>
           </div>
         </div>
@@ -226,7 +241,21 @@ const tools = [
   'flite'
 ]
 
-const createExampleTools = () => {
+const presets = [{
+  id: 1,
+  name: 'Many tools',
+  tools: tools
+}, {
+  id: 2,
+  name: 'Fewer tools',
+  tools: tools.slice(0, 10)
+}, {
+  id: 3,
+  name: 'Flite only',
+  tools: tools.filter((tool) => tool.includes('flite'))
+}]
 
-  return [tools.join(' | ')]
+const createAllExampleTools = (_id: number) => {
+
+  return [presets.find(({id}) => id === _id)?.tools.join(' | ') || '']
 }
