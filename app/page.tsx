@@ -75,6 +75,8 @@ export default function Home() {
     }
   }
 
+  const [tools, setTools] = useState(createExampleTools())
+
   return (
     <div
       style={{
@@ -97,10 +99,12 @@ export default function Home() {
             </select>
           </div>
           <Editor
+            toolbar={tools}
             onChange={(value) => setMessage(value)}
             value={message}
             activeUserId={activeUserId}/>
-          <div style={{alignSelf: 'start', flexGrow: '0'}}>
+          <div style={{display: 'flex', flexDirection: 'column', gap: '24px'}}>
+          <div style={{alignSelf: 'start', flexGrow: '0', gap: '24px', display: 'flex', position: 'relative', width: '100%'}}>
             <button
               disabled={!existingMessageId || savingState !== 'default'}
               style={{padding: '10px'}}
@@ -108,8 +112,121 @@ export default function Home() {
               <b>{getSavingLabel(savingState)}</b>
             </button>
           </div>
+          <textarea
+              style={{flexGrow: 1, width: '100%', minHeight: '200px'}}
+              value={tools.join('\n')}
+              onChange={({target}) => setTools(target.value.split('\n'))}/>
+          </div>
         </div>
       </div>
     </div>
   )
+}
+
+const tools = [
+  'accordion',
+  'addcomment',
+  'aidialog',
+  'aishortcuts',
+  'aligncenter',
+  'alignjustify',
+  'alignleft',
+  'alignnone',
+  'alignright',
+  'anchor',
+  'blockquote',
+  'blocks',
+  'backcolor',
+  'bold',
+  'casechange',
+  'checklist',
+  'copy',
+  'cut',
+  'fontfamily',
+  'fontsize',
+  'forecolor',
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'hr',
+  'indent',
+  'italic',
+  'language',
+  'lineheight',
+  'newdocument',
+  'outdent',
+  'paste',
+  'pastetext',
+  'print',
+  'exportpdf',
+  'exportword',
+  'importword',
+  'redo',
+  'remove',
+  'removeformat',
+  'selectall',
+  'strikethrough',
+  'styles',
+  'subscript',
+  'superscript',
+  'underline',
+  'undo',
+  'visualaid',
+  'a11ycheck',
+  'advtablerownumbering',
+  'revisionhistory',
+  'typopgraphy',
+  'casechange',
+  'charmap',
+  'code',
+  'codesample',
+  'showcomments',
+  'ltr',
+  'rtl',
+  'editimage',
+  'fliph',
+  'flipv',
+  'imageoptions',
+  'rotateleft',
+  'rotateright',
+  'emoticons',
+  'export',
+  'footnotes',
+  'footnotesupdate',
+  'formatpainter',
+  'fullscreen',
+  'help',
+  'image',
+  'insertdatetime',
+  'link',
+  'openlink',
+  'unlink',
+  'bullist',
+  'numlist',
+  'media',
+  'mergetags',
+  'mergetags_list',
+  'nonbreaking',
+  'pagebreak',
+  'pageembed',
+  'permanentpen',
+  'preview',
+  'quickimage',
+  'quicklink',
+  'quicktable',
+  'cancel',
+  'save',
+  'searchreplace',
+  'spellcheckdialog',
+  'spellchecker',
+  'table',
+  'flite'
+]
+
+const createExampleTools = () => {
+
+  return [tools.join(' | ')]
 }

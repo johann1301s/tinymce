@@ -37,11 +37,14 @@ type Props = {
     onChange(value: string): void
     value: string
     activeUserId: string
+    toolbar: string[]
 }
 
 export const Editor = (props: Props) => {
     const editorRef = useRef<any>(null);
     const [flite, setFlite] = useState<any>(null);
+    const [show, setShow] = useState(false)
+
 
     const onEditorInited = useCallback((evt: unknown, editor: any) => {
         editorRef.current = editor;
@@ -61,71 +64,75 @@ export const Editor = (props: Props) => {
 
     }, [props.activeUserId, flite])
 
+    useEffect(() => {
+        setShow(false)
+    }, [props.toolbar])
+
+    useEffect(() => {
+        setShow(true)
+    }, [show])
+
     return (
         <div style={{minHeight: '500px', minWidth: '80%', background: 'lightgray'}}>
-            <TEditor
-                apiKey={'5mwypg9c08ih4fcpubmb57cavmibsx4ws639q0m85gy6b6hg'}
-                onInit={onEditorInited}
-                value={props.value}
-                init={{
-                    height: 500,
-                    menubar: false,
-                    plugins: [
-                        'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                        'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                        'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount', 'tinycomments'
-                    ],
-                    external_plugins: {
-                        flite: '/flite/plugin.min.js',
-                    },
-                    flite: {
-                        users: users.slice(),
-                        user: { id: props.activeUserId },
-                        tooltips: {
-                            template: '%a by %u, last edit %T'
+            {show && (
+                <TEditor
+                    apiKey={'5mwypg9c08ih4fcpubmb57cavmibsx4ws639q0m85gy6b6hg'}
+                    onInit={onEditorInited}
+                    value={props.value}
+                    toolbar={props.toolbar}
+                    init={{
+                        height: 500,
+                        menubar: false,
+                        plugins: [
+                            'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                            'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                            'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount', 'tinycomments'
+                        ],
+                        external_plugins: {
+                            flite: '/flite/plugin.min.js',
                         },
-                    
-                    },
-                    toolbar: [
-                        'undo redo | blocks | ' +
-                        'bold italic forecolor | alignleft aligncenter ' +
-                        'alignright alignjustify | bullist numlist outdent indent | ' +
-                        'removeformat | help |',
-                        'addcomment showcomments | flite'
-                    ],
-                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
-                    skin: 'COSTUM',
-                    content_css: "/",
-                    skin_url: '/',
-                    tinycomments_mode: 'embedded',
-                    tinycomments_author: 'User', // users.find(({id}) => props.activeUserId == id)?.name,
-                    tinycomments_fetch: (_event: any, done: any) => {
-                        done({ conversations });
-                    },
-                    tinycomments_create: (event: any) => {
-                        console.log(event);
-                    },
-                    tinycomments_reply: (event: any) => {
-                        console.log(event);
-                    },
-                    tinycomments_lookup: (event: any) => {
-                        console.log(event);
-                    },
-                    tinycomments_delete: (event: any) => {
-                        console.log(event);
-                    },
-                    tinycomments_delete_all: (event: any) => {
-                        console.log(event);
-                    },
-                    tinycomments_delete_comment: (event: any) => {
-                        console.log(event);
-                    },
-                    tinycomments_edit_comment: (event: any) => {
-                        console.log(event);
-                    }
-                }}
-                onEditorChange={props.onChange}
-            />
+                        flite: {
+                            users: users.slice(),
+                            user: { id: props.activeUserId },
+                            tooltips: {
+                                template: '%a by %u, last edit %T'
+                            },
+                        
+                        },
+                        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                        skin: 'COSTUM',
+                        content_css: "/",
+                        skin_url: '/',
+                        tinycomments_mode: 'embedded',
+                        tinycomments_author: 'User', // users.find(({id}) => props.activeUserId == id)?.name,
+                        tinycomments_fetch: (_event: any, done: any) => {
+                            done({ conversations });
+                        },
+                        tinycomments_create: (event: any) => {
+                            console.log(event);
+                        },
+                        tinycomments_reply: (event: any) => {
+                            console.log(event);
+                        },
+                        tinycomments_lookup: (event: any) => {
+                            console.log(event);
+                        },
+                        tinycomments_delete: (event: any) => {
+                            console.log(event);
+                        },
+                        tinycomments_delete_all: (event: any) => {
+                            console.log(event);
+                        },
+                        tinycomments_delete_comment: (event: any) => {
+                            console.log(event);
+                        },
+                        tinycomments_edit_comment: (event: any) => {
+                            console.log(event);
+                        }
+                    }}
+                    onEditorChange={props.onChange}
+                />
+            )}
         </div>
     );
 };
