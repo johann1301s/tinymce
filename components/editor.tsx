@@ -50,12 +50,15 @@ export const Editor = (props: Props) => {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const flite = event.flite;
 
-            console.log(flite)
         });
     }, []);
 
     useEffect(() => {
         flite?.setUserInfo(props.activeUserId)
+        // const username = users.find(({id}) => props.activeUserId == id)?.name
+        // editorRef.current?.options.set('tinycomments_author', username)
+        // editorRef.current?.options.set('tinycomments_author_name', username)
+
     }, [props.activeUserId, flite])
 
     return (
@@ -96,7 +99,7 @@ export const Editor = (props: Props) => {
                     skin_url: '/',
                     tinycomments_mode: 'embedded',
                     tinycomments_author: 'User', // users.find(({id}) => props.activeUserId == id)?.name,
-                    tinycomments_fetch: (event: any, done: any) => {
+                    tinycomments_fetch: (_event: any, done: any) => {
                         done({ conversations });
                     },
                     tinycomments_create: (event: any) => {
