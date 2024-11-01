@@ -243,11 +243,11 @@ const tools = [
 
 const presets = [{
   id: 1,
-  name: 'Many tools',
+  name: 'More tools...',
   tools: tools
 }, {
   id: 2,
-  name: 'Fewer tools',
+  name: 'Fewer tools...',
   tools: tools.slice(0, 10)
 }]
 
