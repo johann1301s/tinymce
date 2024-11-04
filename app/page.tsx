@@ -82,6 +82,8 @@ export default function Home() {
 
   const [tools, setTools] = useState(createAllExampleTools(2))
 
+  const [showMore, setShowMore] = useState(false)
+
   return (
     <div
       style={{
@@ -125,12 +127,19 @@ export default function Home() {
                   <b>{preset.name}</b>
                 </button>
               ))}
+                <button
+                  style={{padding: '10px'}}
+                  onClick={() => setShowMore((prev) => !prev)}>
+                  <b>{showMore ? 'Vis mindre' : 'Vis mer'}</b>
+                </button>
             </div>
           </div>
-          <textarea
-              style={{flexGrow: 1, width: '100%', minHeight: '150px', fontSize: '14px'}}
-              value={tools.join('\n')}
-              onChange={({target}) => setTools(target.value.split('\n'))}/>
+          {showMore && (
+            <textarea
+            style={{flexGrow: 1, width: '100%', minHeight: '150px', fontSize: '14px'}}
+            value={tools.join('\n')}
+            onChange={({target}) => setTools(target.value.split('\n'))}/>
+          )}
           </div>
         </div>
       </div>
