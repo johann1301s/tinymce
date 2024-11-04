@@ -149,6 +149,7 @@ const tools = [
   'alignnone',
   'alignright',
   'anchor',
+  'flite',
   'blockquote',
   'blocks',
   'backcolor',
@@ -237,8 +238,7 @@ const tools = [
   'searchreplace',
   // 'spellcheckdialog',
   // 'spellchecker',
-  'table',
-  'flite'
+  'table'
 ]
 
 const presets = [{
