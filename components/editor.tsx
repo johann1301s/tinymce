@@ -82,6 +82,8 @@ export const Editor = (props: Props) => {
                     toolbar={props.toolbar}
                     init={{
                         height: 500,
+                        icons_url: `${window.location.origin}/icons/icon-package-1/icons.js`,
+                        icons: 'icon-package-1',
                         menubar: false,
                         plugins: [
                             'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',

@@ -80,7 +80,7 @@ export default function Home() {
     }
   }
 
-  const [tools, setTools] = useState(createAllExampleTools(2))
+  const [tools, setTools] = useState(createAllExampleTools(1))
 
   const [showMore, setShowMore] = useState(false)
 
