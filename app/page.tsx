@@ -127,7 +127,6 @@ export default function Home() {
               onChange={(_skin) => {
                 setSkin(_skin)
               }}/>
-              {skin}
             <div style={{alignSelf: 'start', flexGrow: '0', gap: '24px', display: 'flex'}}>
               {presets.map((preset) => (
                 <button
