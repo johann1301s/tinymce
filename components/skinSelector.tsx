@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 type TSkinSelectorProps = {
     onChange: (skin: string) => void;
+    initialValue: string
 };
 
 export const SkinSelector = (props: TSkinSelectorProps) => {
@@ -14,7 +15,7 @@ export const SkinSelector = (props: TSkinSelectorProps) => {
         skin: 'matrix'
     }]
 
-    const [skin, setSkin] = useState(options[0].skin)
+    const [skin, setSkin] = useState(props.initialValue)
 
     const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSkin(event.target.value)
