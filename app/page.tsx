@@ -1,6 +1,7 @@
 'use client'
 
 import { Editor } from '@/components/editor'
+import { SkinSelector } from '@/components/skinSelector'
 import { minTime } from '@/lib/minTime'
 import { mockUsers } from '@/lib/mockUsers'
 import { supabase } from '@/lib/supabaseClient'
@@ -84,6 +85,8 @@ export default function Home() {
 
   const [showMore, setShowMore] = useState(false)
 
+  const [skin, setSkin] = useState('matrix')
+
   return (
     <div
       style={{
@@ -106,6 +109,7 @@ export default function Home() {
             </select>
           </div>
           <Editor
+            skin={skin}
             toolbar={tools}
             onChange={(value) => setMessage(value)}
             value={message}
@@ -118,6 +122,11 @@ export default function Home() {
               onClick={handleSubmit}>
               <b>{getSavingLabel(savingState)}</b>
             </button>
+            <SkinSelector
+              onChange={(skin) => {
+                setSkin(skin)
+              }}/>
+              {skin}
             <div style={{alignSelf: 'start', flexGrow: '0', gap: '24px', display: 'flex'}}>
               {presets.map((preset) => (
                 <button

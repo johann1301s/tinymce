@@ -38,13 +38,13 @@ type Props = {
     value: string
     activeUserId: string
     toolbar: string[]
+    skin: string
 }
 
 export const Editor = (props: Props) => {
     const editorRef = useRef<any>(null);
     const [flite, setFlite] = useState<any>(null);
     const [show, setShow] = useState(false)
-
 
     const onEditorInited = useCallback((evt: unknown, editor: any) => {
         editorRef.current = editor;
@@ -61,12 +61,11 @@ export const Editor = (props: Props) => {
         // const username = users.find(({id}) => props.activeUserId == id)?.name
         // editorRef.current?.options.set('tinycomments_author', username)
         // editorRef.current?.options.set('tinycomments_author_name', username)
-
     }, [props.activeUserId, flite])
 
     useEffect(() => {
         setShow(false)
-    }, [props.toolbar])
+    }, [props.toolbar, props.skin])
 
     useEffect(() => {
         setShow(true)
@@ -102,11 +101,9 @@ export const Editor = (props: Props) => {
                         
                         },
                         content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
-                        skin: 'COSTUM',
-                        content_css: "/",
-                        skin_url: '/',
+                        skin_url: `/skins/${props.skin}`,
                         tinycomments_mode: 'embedded',
-                        tinycomments_author: 'User', // users.find(({id}) => props.activeUserId == id)?.name,
+                        tinycomments_author: 'User',
                         tinycomments_fetch: (_event: any, done: any) => {
                             done({ conversations });
                         },
