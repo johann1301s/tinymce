@@ -6,9 +6,9 @@ export const GET = async (req: NextRequest) => {
   try {
     const { searchParams } = new URL(req.url);
     const query = `
-      UPDATE MessagesPoc
+      UPDATE Messages
       SET Message = '${searchParams.get('message') || '-'}'
-      WHERE EmployeeID = 1;
+      WHERE ID = 1;
     `
 
     const pool = await getDbConnection();
