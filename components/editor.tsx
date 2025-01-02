@@ -1,4 +1,3 @@
-'use client'
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Editor as TEditor } from '@tinymce/tinymce-react';

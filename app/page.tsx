@@ -37,7 +37,7 @@ export default function Home() {
       }
     }
 
-    fetchFirstMessage()
+    // fetchFirstMessage()
   }, [])
 
   const handleSubmit = async () => {
