@@ -72,7 +72,7 @@ export const Editor = (props: Props) => {
     }, [show])
 
     return (
-        <Frame style={{minHeight: '500px', minWidth: '80%', background: 'lightgray'}}>
+        <Frame>
             {show && (
                 <TEditor
                     apiKey={'5mwypg9c08ih4fcpubmb57cavmibsx4ws639q0m85gy6b6hg'}
@@ -141,6 +141,13 @@ const Frame = styled.div`
         border: none;
         border-radius: 0;
     }
+    .tox-statusbar {
+        display: none !important;
+
+        .tox-statusbar__branding {
+            display: none;
+        }
+    }
     .tox-editor-container {
         .tox-editor-header {
             .tox-toolbar-overlord {
@@ -148,6 +155,7 @@ const Frame = styled.div`
                     font-family: "Nunito";
                     .tox-toolbar__group {
                         .tox-tbtn {
+                            cursor: pointer;
                             outline: none;
                         }
                     }
