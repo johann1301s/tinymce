@@ -1,6 +1,6 @@
 'use client'
 
-import { Editor } from '@/components/editor'
+import { Editor } from '@/components/editor/editor'
 import { SkinSelector } from '@/components/skinSelector'
 import { minTime } from '@/lib/minTime'
 import { mockUsers } from '@/lib/mockUsers'

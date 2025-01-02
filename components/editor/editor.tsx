@@ -2,6 +2,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Editor as TEditor } from '@tinymce/tinymce-react';
 import styled from 'styled-components';
+import { editorIcons } from './editorIcons';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const conversations = {
@@ -20,7 +21,6 @@ const conversations = {
         ]
     },
 }
-
 
 type User = {
     id: string;
@@ -48,6 +48,9 @@ export const Editor = (props: Props) => {
 
     const onEditorInited = useCallback((evt: unknown, editor: any) => {
         editorRef.current = editor;
+        Object.entries(editorIcons).forEach(([key, entry]) => {
+            editor.ui.registry.addIcon(key, entry)
+        })
         setFlite(editor.plugins.flite);
         editor.on('flite:init', (event: any) => {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -81,8 +84,6 @@ export const Editor = (props: Props) => {
                     toolbar={props.toolbar}
                     init={{
                         height: 500,
-                        icons_url: `${window.location.origin}/icons/icon-package-1/icons.js`,
-                        icons: 'icon-package-1',
                         menubar: false,
                         content_style: 'body { background: #f8f8f8;}',
                         plugins: [
@@ -98,8 +99,7 @@ export const Editor = (props: Props) => {
                             user: { id: props.activeUserId },
                             tooltips: {
                                 template: '%a by %u, last edit %T'
-                            },
-                        
+                            }
                         },
                         tinycomments_mode: 'embedded',
                         tinycomments_author: 'User',
@@ -134,7 +134,6 @@ export const Editor = (props: Props) => {
         </Frame>
     );
 };
-
 
 const Frame = styled.div`
     .tox-tinymce {
