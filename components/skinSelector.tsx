@@ -13,6 +13,9 @@ export const SkinSelector = (props: TSkinSelectorProps) => {
         }, {
         id: '2',
         skin: 'matrix'
+    }, {
+        id: '3',
+        skin: 'normal'
     }]
 
     const [skin, setSkin] = useState(props.initialValue)

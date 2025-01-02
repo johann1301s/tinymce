@@ -85,7 +85,7 @@ export default function Home() {
 
   const [showMore, setShowMore] = useState(false)
 
-  const [skin, setSkin] = useState('matrix')
+  const [skin, setSkin] = useState('normal')
 
   return (
     <div
