@@ -22,6 +22,8 @@ export default function Home() {
   useEffect(() => {
     const fetchFirstMessage = async () => {
       // Fetch the first message from the `messages` table
+
+      return 
       const { data, error } = await supabase
         .from('messages')
         .select('*')
@@ -37,7 +39,7 @@ export default function Home() {
       }
     }
 
-    // fetchFirstMessage()
+    fetchFirstMessage()
   }, [])
 
   const handleSubmit = async () => {
