@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Editor as TEditor } from '@tinymce/tinymce-react';
+import styled from 'styled-components';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const conversations = {
@@ -72,7 +73,7 @@ export const Editor = (props: Props) => {
     }, [show])
 
     return (
-        <div style={{minHeight: '500px', minWidth: '80%', background: 'lightgray'}}>
+        <Frame style={{minHeight: '500px', minWidth: '80%', background: 'lightgray'}}>
             {show && (
                 <TEditor
                     apiKey={'5mwypg9c08ih4fcpubmb57cavmibsx4ws639q0m85gy6b6hg'}
@@ -84,10 +85,11 @@ export const Editor = (props: Props) => {
                         icons_url: `${window.location.origin}/icons/icon-package-1/icons.js`,
                         icons: 'icon-package-1',
                         menubar: false,
+                        content_style: 'body { background: #f8f8f8;}',
                         plugins: [
                             'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
                             'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                            'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount', 'tinycomments'
+                            'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount', // 'tinycomments'
                         ],
                         external_plugins: {
                             flite: '/flite/plugin.min.js',
@@ -100,8 +102,6 @@ export const Editor = (props: Props) => {
                             },
                         
                         },
-                        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
-                        skin_url: `/skins/${props.skin}`,
                         tinycomments_mode: 'embedded',
                         tinycomments_author: 'User',
                         tinycomments_fetch: (_event: any, done: any) => {
@@ -132,6 +132,42 @@ export const Editor = (props: Props) => {
                     onEditorChange={props.onChange}
                 />
             )}
-        </div>
+        </Frame>
     );
 };
+
+
+const Frame = styled.div`
+    .tox-tinymce {
+        border: none;
+        border-radius: 0;
+    }
+    .tox-editor-container {
+        .tox-editor-header {
+            .tox-toolbar-overlord {
+                .tox-toolbar {
+                    font-family: "Nunito";
+                    .tox-toolbar__group {
+                        .tox-tbtn {
+                            outline: none;
+                        }
+                    }
+                }
+            }
+            .tox-anchorbar {
+                
+            }
+        }
+        .tox-sidebar-wrap {
+            .tox-edit-area {
+                &::before {
+                    border-radius: 0;
+                    border: none;
+                }
+            }
+        }
+        .tox-bottom-anchorbar {
+
+        }
+    }
+`
