@@ -5,7 +5,7 @@ import { mockUsers } from '@/lib/mockUsers'
 import { useState } from 'react'
 
 export default function Home() {
-  const [message, setMessage] = useState<string>('')
+  const [value, setValue] = useState('')
   const [activeUserId, setActiveUserId] = useState(mockUsers[0].id)
 
   return (
@@ -30,9 +30,13 @@ export default function Home() {
             </select>
           </div>
           <Editor
-            onChange={(value) => setMessage(value)}
-            value={message}
-            activeUserId={activeUserId}/>
+            onChange={(newValue) => setValue(newValue)}
+            value={value}
+            user={{
+              id: activeUserId,
+              displayName: mockUsers.find((itm) => itm.id === activeUserId)?.name || ''
+            }}/>
+            <div style={{wordBreak: 'break-all'}}>{value}</div>
         </div>
       </div>
     </div>

@@ -5,24 +5,6 @@ import styled from 'styled-components';
 import { editorIcons } from './editorIcons';
 import { editorConfig } from './editorConfig';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const conversations = {
-    'id-1': {
-        uid: 'uid-1',
-        comments: [
-            {
-                uid: 'uid-2',
-                author: 'author-1',
-                authorName: 'Kari Nordmann',
-                authorAvatar: 'av-1',
-                content: 'Hey, look! A comment!',
-                createdAt: '2024-10-25T00:00:00Z',
-                modifiedAt: '2024-10-25T00:00:00Z'
-            },
-        ]
-    },
-}
-
 type User = {
     id: string;
     name: string;
@@ -37,7 +19,10 @@ const users: User[] = [
 type Props = {
     onChange(value: string): void
     value: string
-    activeUserId: string
+    user: {
+        id: string
+        displayName: string
+    }
 }
 
 export const Editor = (props: Props) => {
@@ -50,6 +35,11 @@ export const Editor = (props: Props) => {
             editor.ui.registry.addIcon(key, entry)
         })
         setFlite(editor.plugins.flite);
+        editor.on('flite:showHide', (event: any) => {
+            if (event.show) {
+                // hide comments
+            }
+        })
         editor.on('flite:init', (event: any) => {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const flite = event.flite;
@@ -58,11 +48,11 @@ export const Editor = (props: Props) => {
     }, []);
 
     useEffect(() => {
-        flite?.setUserInfo(props.activeUserId)
+        flite?.setUserInfo(props.user.id)
         // const username = users.find(({id}) => props.activeUserId == id)?.name
         // editorRef.current?.options.set('tinycomments_author', username)
         // editorRef.current?.options.set('tinycomments_author_name', username)
-    }, [props.activeUserId, flite])
+    }, [props.user.id, flite])
 
     return (
         <Frame>
@@ -84,37 +74,14 @@ export const Editor = (props: Props) => {
                         isTracking: false,
                         isVisible: false,
                         users: users.slice(),
-                        user: { id: props.activeUserId },
+                        user: { id: props.user.id },
                         tooltips: {
                             template: '%a by %u, last edit %T'
                         }
                     },
                     tinycomments_mode: 'embedded',
-                    tinycomments_author: 'User',
-                    tinycomments_fetch: (_event: any, done: any) => {
-                        done({ conversations });
-                    },
-                    tinycomments_create: (event: any) => {
-                        console.log(event);
-                    },
-                    tinycomments_reply: (event: any) => {
-                        console.log(event);
-                    },
-                    tinycomments_lookup: (event: any) => {
-                        console.log(event);
-                    },
-                    tinycomments_delete: (event: any) => {
-                        console.log(event);
-                    },
-                    tinycomments_delete_all: (event: any) => {
-                        console.log(event);
-                    },
-                    tinycomments_delete_comment: (event: any) => {
-                        console.log(event);
-                    },
-                    tinycomments_edit_comment: (event: any) => {
-                        console.log(event);
-                    }
+                    tinycomments_author: props.user.id,
+                    tinycomments_author_name: props.user.displayName,
                 }}
                 onEditorChange={props.onChange}
             />
