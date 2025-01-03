@@ -8,6 +8,9 @@ type TEditorConfig = {
     toolSelectedBorderRadius: number
     toolbarBg: string
     toolbarDropShadow: string
+    commentsBg: string
+    commentsHeaderBg: string
+    commentsHeaderColor: string
 }
 
 const editorConfig1: TEditorConfig = {
@@ -17,7 +20,10 @@ const editorConfig1: TEditorConfig = {
     toolSelectedBorderRadius: 3,
     toolbarBg: '#acacac',
     toolBg: '#ffffff',
-    toolbarDropShadow: '0 2px 2px -2px rgba(34,47,62,.1), 0 8px 8px -4px rgba(34,47,62,.07)'
+    toolbarDropShadow: '0 2px 2px -2px rgba(34,47,62,.1), 0 8px 8px -4px rgba(34,47,62,.07)',
+    commentsBg: 'blue',
+    commentsHeaderBg: 'pink',
+    commentsHeaderColor: 'white'
 }
 
 export const editorConfig = editorConfig1

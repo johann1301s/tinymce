@@ -170,6 +170,15 @@ const Frame = styled.div`
                     border: none;
                 }
             }
+            .tox-sidebar {
+                background-color: ${editorConfig.commentsBg};
+                .tox-conversations__header {
+                    background: ${editorConfig.commentsHeaderBg};
+                    .tox-conversations__title {
+                        color: ${editorConfig.commentsHeaderColor};;
+                    }
+                }
+            }
         }
         .tox-bottom-anchorbar {
 
