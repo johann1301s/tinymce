@@ -171,11 +171,14 @@ const Frame = styled.div`
                 }
             }
             .tox-sidebar {
-                background-color: ${editorConfig.commentsBg};
-                .tox-conversations__header {
-                    background: ${editorConfig.commentsHeaderBg};
-                    .tox-conversations__title {
-                        color: ${editorConfig.commentsHeaderColor};;
+                background: ${editorConfig.contentAreaBg};
+                .tox-sidebar__pane {
+                    background-color: ${editorConfig.commentsBg};
+                    .tox-conversations__header {
+                        background: ${editorConfig.commentsHeaderBg};
+                        .tox-conversations__title {
+                            color: ${editorConfig.commentsHeaderColor};;
+                        }
                     }
                 }
             }
