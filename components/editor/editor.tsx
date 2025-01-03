@@ -67,23 +67,22 @@ export const Editor = (props: Props) => {
     return (
         <Frame>
             <TEditor
-                apiKey={'5mwypg9c08ih4fcpubmb57cavmibsx4ws639q0m85gy6b6hg'}
+                apiKey={'tpwemofiiae8simzlmhkevt82ywprtc8szdc80usdo8xdy33'}
                 onInit={onEditorInited}
                 value={props.value}
-                toolbar={'bold | italic | underline | strikethrough | redo | undo | removeformat | alignleft | aligncenter | alignright | alignjustify | flite'}
+                toolbar={[
+                    'bold italic underline strikethrough | redo undo | removeformat | alignleft aligncenter alignright alignjustify',
+                    'flite-toggletracking flite-toggleshow flite-acceptall flite-rejectall flite-acceptone flite-rejectone | addcomment showcomments'
+                ]}
                 init={{
                     height: 500,
                     menubar: false,
                     content_style: `body { background: ${editorConfig.contentAreaBg}}`,
-                    plugins: [
-                        'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                        'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                        'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount', // 'tinycomments'
-                    ],
-                    external_plugins: {
-                        flite: '/flite/plugin.min.js',
-                    },
+                    plugins: ['tinycomments'],
+                    external_plugins: { flite: '/flite/plugin.min.js' },
                     flite: {
+                        isTracking: false,
+                        isVisible: false,
                         users: users.slice(),
                         user: { id: props.activeUserId },
                         tooltips: {
