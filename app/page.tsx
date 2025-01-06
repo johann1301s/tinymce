@@ -30,6 +30,7 @@ export default function Home() {
             </select>
           </div>
           <Editor
+            key={activeUserId}
             onChange={(newValue) => setValue(newValue)}
             value={value}
             user={{
