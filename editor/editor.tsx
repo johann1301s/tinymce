@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Editor as TEditor } from '@tinymce/tinymce-react';
 import styled from 'styled-components';
 import { editorIcons } from './editorIcons';
-import { editorConfig } from './editorConfig';
+import { contentStyle, editorConfig } from './editorConfig';
 
 type User = {
     id: string;
@@ -67,7 +67,7 @@ export const Editor = (props: Props) => {
                 init={{
                     height: 500,
                     menubar: false,
-                    content_style: `body { background: ${editorConfig.contentAreaBg}}`,
+                    content_style: contentStyle,
                     plugins: ['tinycomments'],
                     external_plugins: { flite: '/flite/plugin.min.js' },
                     flite: {
