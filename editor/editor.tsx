@@ -1,20 +1,21 @@
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Editor as TEditor } from '@tinymce/tinymce-react';
 import styled from 'styled-components';
-import { editorIcons } from './editorIcons';
 import { contentStyle, editorConfig } from './editorConfig';
+import { Comments } from './comments';
 
 type User = {
-    id: string;
+    id: number;
     name: string;
     picture: string;
 }
 
 const users: User[] = [
-    { id: '18', name: 'Ola Nordmann', picture: '/avatars/david.png' },
-    { id: '15', name: 'Kari Nordmann', picture: '/avatars/mary.png' }
-];
+	{ id: 18, name: "Syd", picture: "/avatars/syd.png" },
+	{ id: 15, name: "David", picture: "/avatars/david.png" },
+	{ id: 21, name: "Mary", picture: "/avatars/mary.png" }
+]
 
 type Props = {
     onChange(value: string): void
@@ -26,68 +27,53 @@ type Props = {
 }
 
 export const Editor = (props: Props) => {
-    const editorRef = useRef<any>(null);
-    const [flite, setFlite] = useState<any>(null);
+	const editorRef = useRef(null);
+	const [lance, setLance] = useState(null);
+	const [lanceGlobals, setLanceGlobals] = useState(null);
 
-    const onEditorInited = useCallback((evt: unknown, editor: any) => {
-        editorRef.current = editor;
-        Object.entries(editorIcons).forEach(([key, entry]) => {
-            editor.ui.registry.addIcon(key, entry)
-        })
-        setFlite(editor.plugins.flite);
-        editor.on('flite:showHide', (event: any) => {
-            if (event.show) {
-                // hide comments
-            }
-        })
-        editor.on('flite:init', (event: any) => {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const flite = event.flite;
-
-        });
-    }, []);
-
-    useEffect(() => {
-        flite?.setUserInfo(props.user.id)
-        // const username = users.find(({id}) => props.activeUserId == id)?.name
-        // editorRef.current?.options.set('tinycomments_author', username)
-        // editorRef.current?.options.set('tinycomments_author_name', username)
-    }, [props.user.id, flite])
-
+	const onEditorInited = useCallback((evt: any, editor: any) => {
+		editorRef.current = editor;
+		setLance(editor.plugins.lance);
+		editor.on("lance::init", function (event: any) {
+			const lance = event.lance,
+				ann = lance.getAnnotations();
+			ann.addUsers(users);
+			ann.setUserId(users[0].id);
+			setLanceGlobals(lance.App);
+		});
+	}, [])
+    
     return (
-        <Frame>
-            <TEditor
-                apiKey={'tpwemofiiae8simzlmhkevt82ywprtc8szdc80usdo8xdy33'}
-                onInit={onEditorInited}
-                value={props.value}
-                toolbar={[
-                    'bold italic underline strikethrough | redo undo | removeformat | alignleft aligncenter alignright alignjustify',
-                    'flite-toggletracking flite-toggleshow flite-acceptall flite-rejectall flite-acceptone flite-rejectone | addcomment showcomments'
-                ]}
-                init={{
-                    height: 500,
-                    menubar: false,
-                    content_style: contentStyle,
-                    plugins: ['tinycomments'],
-                    external_plugins: { flite: '/flite/plugin.min.js' },
-                    flite: {
-                        isTracking: false,
-                        isVisible: false,
-                        users: users.slice(),
-                        user: { id: props.user.id },
-                        tooltips: {
-                            template: '%a by %u, last edit %T'
+        <Wrapper>
+            <Frame>
+                <TEditor
+                    apiKey={'tpwemofiiae8simzlmhkevt82ywprtc8szdc80usdo8xdy33'}
+                    value={props.value}
+                    onInit={onEditorInited}
+                    onEditorChange={props.onChange}
+                    toolbar={['bold italic underline strikethrough | redo undo | removeformat | alignleft aligncenter alignright alignjustify | lance']}
+                    init={{
+                        height: 500,
+                        menubar: false,
+                        content_style: contentStyle,
+                        external_plugins: {
+                            lance: '/lance/plugin.min.js'
+                        },
+                        lance: {
+                            useTextSelection: "all"
                         }
-                    },
-                    tinycomments_mode: 'embedded',
-                    tinycomments_author: props.user.id,
-                    tinycomments_author_name: props.user.displayName,
-                }}
-                onEditorChange={props.onChange}
-            />
-        </Frame>
+                    }}/>
+            </Frame>
+            <Comments lance={lance} App={lanceGlobals}/>
+        </Wrapper>
     );
 };
+
+const Wrapper = styled.div`
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
+`
 
 const Frame = styled.div`
     .tox-tinymce {
