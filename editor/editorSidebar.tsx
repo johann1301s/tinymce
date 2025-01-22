@@ -31,7 +31,7 @@ export const EditorSidebar = (props: any) => {
 }
 
 const Frame = styled.div`
-    background: white;
+    background: #c4c4c4;
     width: 300px;
     .lance-content-scroller.annotations-aligned .annotation-ui-wrapper .annotation-ui[data-selected='true'] {
         box-shadow: 0 0 0 2px blue;
@@ -39,6 +39,11 @@ const Frame = styled.div`
     .lance-content-scroller .lance-annotations-container .annotation-ui-wrapper .annotation-ui {
         border-radius: 0;
         transition: none;
-
+    }
+    .lance-content-scroller {
+        border: none;
+    }
+    .lance-content-scroller .lance-annotations-container {
+        padding: 0 25px;
     }
 `
