@@ -31,10 +31,9 @@ export const EditorSidebar = (props: any) => {
 }
 
 const Frame = styled.div`
-    background: #c4c4c4;
     width: 300px;
     .lance-content-scroller.annotations-aligned .annotation-ui-wrapper .annotation-ui[data-selected='true'] {
-        box-shadow: 0 0 0 2px blue;
+        box-shadow: 0 2px 2px -2px rgba(34,47,62,.1),0 8px 8px -4px rgba(34,47,62,.07);
     }
     .lance-content-scroller .lance-annotations-container .annotation-ui-wrapper .annotation-ui {
         border-radius: 0;

@@ -77,13 +77,20 @@ export const Editor = (props: Props) => {
     );
 };
 
-const EditorWrapper = styled.div`
-    flex-grow: 1;
-    height: 500px;
-`
 
 const Frame = styled.div`
     display: flex;
     gap: 0;
-    background: #cdcdcd;
+    background: transparent;
+    border: 2px solid #eee;
+`
+
+const EditorWrapper = styled.div`
+    flex-grow: 1;
+    height: 600px;
+    border-right: 2px solid #eee;
+    .tox-tinymce {
+        border: none;
+        border-radius: 0;
+    }
 `
