@@ -86,6 +86,14 @@ const Frame = styled.div`
 			background: #e2e2e2;
 		}
 	}
+	.lance-content-scroller .lance-annotations-container .annotation-ui-wrapper .comment-ui .comment-top {
+		border-radius: 0;
+		background: white;
+		border-bottom: 1px solid #eee;
+		.comment-avatar {
+			background: #e2e2e2;
+		}
+	}
 	.comment-body {
 		padding: 0 !important;
 		display: flex;
