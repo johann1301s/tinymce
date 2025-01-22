@@ -46,4 +46,7 @@ const Frame = styled.div`
     .lance-content-scroller .lance-annotations-container {
         padding: 0 25px;
     }
+	.comment-controls {
+		gap: 12px;
+	}
 `

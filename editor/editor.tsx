@@ -51,6 +51,7 @@ export const Editor = (props: Props) => {
                     toolbar={[ 'lance', 'flite' ]}
                     onInit={onEditorInited}
                     init={{
+                        height: '100%',
                         external_plugins: {
                             lance: '/lance/plugin.min.js',
                             flite: '/flite/plugin.min.js',
@@ -78,6 +79,7 @@ export const Editor = (props: Props) => {
 
 const EditorWrapper = styled.div`
     flex-grow: 1;
+    height: 500px;
 `
 
 const Frame = styled.div`
