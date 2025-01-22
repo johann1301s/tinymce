@@ -95,4 +95,13 @@ const Frame = styled.div`
 			border-radius: 0 !important;
 		}
 	}
+	.lance-content-scroller {
+		max-height: unset !important;
+		.lance-annotations-container {
+			min-height: 100% !important;
+		}
+	}
+	.comments-search-container {
+		display: none !important;
+	}
 `
