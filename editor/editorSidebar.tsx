@@ -1,6 +1,7 @@
 
 
 import React, { useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
 
 export const EditorSidebar = (props: any) => {
 	const sidebarRef = useRef(null);
@@ -25,6 +26,10 @@ export const EditorSidebar = (props: any) => {
 		}
 	}, [sidebarRef, ui, props.lance, props.App])
 	return (
-		<div className='sidebar' ref={sidebarRef}/>
+		<Frame className='sidebar' ref={sidebarRef}/>
 	);
 }
+
+const Frame = styled.div`
+    background: white;
+`

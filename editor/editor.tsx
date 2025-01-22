@@ -44,30 +44,32 @@ export const Editor = (props: Props) => {
 
     return (
         <Frame>
-            <TEditor
-                apiKey={'tpwemofiiae8simzlmhkevt82ywprtc8szdc80usdo8xdy33'}
-                value={props.value}
-                onEditorChange={props.onChange}
-                toolbar={[ 'lance', 'flite' ]}
-                onInit={onEditorInited}
-                init={{
-                    external_plugins: {
-                        lance: '/lance/plugin.min.js',
-                        flite: '/flite/plugin.min.js',
-                    },
-                    lance: {
-                        useTextSelection: "all"
-                    },
-                    flite: {
-                        isTracking: false,
-                        isVisible: false,
-                        users: users.slice(),
-                        user: { id: props.user.id },
-                        tooltips: {
-                            template: '%a by %u, last edit %T'
+            <EditorWrapper>
+                <TEditor
+                    apiKey={'tpwemofiiae8simzlmhkevt82ywprtc8szdc80usdo8xdy33'}
+                    value={props.value}
+                    onEditorChange={props.onChange}
+                    toolbar={[ 'lance', 'flite' ]}
+                    onInit={onEditorInited}
+                    init={{
+                        external_plugins: {
+                            lance: '/lance/plugin.min.js',
+                            flite: '/flite/plugin.min.js',
+                        },
+                        lance: {
+                            useTextSelection: "all"
+                        },
+                        flite: {
+                            isTracking: false,
+                            isVisible: false,
+                            users: users.slice(),
+                            user: { id: props.user.id },
+                            tooltips: {
+                                template: '%a by %u, last edit %T'
+                            }
                         }
-                    }
-                }}/>
+                    }}/>
+                </EditorWrapper>
                 <EditorSidebar
                     lance={lance}
                     App={lanceGlobals}/>
@@ -75,7 +77,13 @@ export const Editor = (props: Props) => {
     );
 };
 
+const EditorWrapper = styled.div`
+    flex-grow: 1;
+`
+
+
 const Frame = styled.div`
     display: flex;
     gap: 20px;
+    background: red;
 `
