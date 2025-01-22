@@ -40,6 +40,7 @@ const Frame = styled.div`
         border-radius: 0;
         transition: none;
 		padding: 12px;
+		border: 1px solid #eee;
 		.comment-reply-container {
 			gap: 12px;
 		}
