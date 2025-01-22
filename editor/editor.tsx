@@ -15,7 +15,6 @@ const users: User[] = [
 	{ id: 21, name: "Mary", picture: "/avatars/mary.png" }
 ];
 
-
 type Props = {
     onChange(value: string): void
     value: string
@@ -83,6 +82,6 @@ const EditorWrapper = styled.div`
 
 const Frame = styled.div`
     display: flex;
-    gap: 20px;
+    gap: 0;
     background: #cdcdcd;
 `
