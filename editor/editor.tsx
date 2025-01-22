@@ -77,7 +77,6 @@ export const Editor = (props: Props) => {
     );
 };
 
-
 const Frame = styled.div`
     display: flex;
     gap: 0;
