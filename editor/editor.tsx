@@ -93,6 +93,7 @@ const EditorWrapper = styled.div`
         border-radius: 0;
     }
     .tox-statusbar {
+        border-top: 1px solid #a23030 #eee;
         .tox-statusbar__branding {
             display: none;
         }
