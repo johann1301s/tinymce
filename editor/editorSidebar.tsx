@@ -60,12 +60,15 @@ const Frame = styled.div`
 		}
 	}
 	.lance-content-scroller .lance-annotations-container .annotation-ui-wrapper textarea {
-		margin: 0 !important;
-		&:focus-visible {
-			outline: 2px solid rgb(43, 122, 212);
+		&.comment-reply-text {
+			margin: 0 !important;
+			border: 1px solid #b0b0b0 !important;
+			&:focus-visible {
+				outline: 2px solid rgb(43, 122, 212);
+			}
+			width: unset !important;
+			border-radius: 0 !important;
 		}
-		width: unset !important;
-		border-radius: 0 !important;
 	}
 	.lance-content-scroller .lance-annotations-container .annotation-ui-wrapper .annotation-ui[data-selected='true'] .annotation-tip {
 		display: none;
@@ -83,6 +86,7 @@ const Frame = styled.div`
 		display: flex;
 		textarea {
 			padding: 0 !important;
+			border: none !important;
 		}
 	}
 `
