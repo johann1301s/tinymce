@@ -48,10 +48,15 @@ export const Editor = (props: Props) => {
                     apiKey={'tpwemofiiae8simzlmhkevt82ywprtc8szdc80usdo8xdy33'}
                     value={props.value}
                     onEditorChange={props.onChange}
-                    toolbar={[ 'lance', 'flite' ]}
+                    toolbar={[
+                        'bold italic underline strikethrough | redo undo | removeformat | alignleft aligncenter alignright alignjustify',
+                        'lance',
+                        'flite-toggletracking flite-toggleshow flite-acceptall flite-rejectall flite-acceptone flite-rejectone',
+                    ]}
                     onInit={onEditorInited}
                     init={{
                         height: '100%',
+                        menubar: false,
                         external_plugins: {
                             lance: '/lance/plugin.min.js',
                             flite: '/flite/plugin.min.js',
