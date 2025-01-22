@@ -93,4 +93,9 @@ const EditorWrapper = styled.div`
         border: none;
         border-radius: 0;
     }
+    .tox-statusbar {
+        .tox-statusbar__branding {
+            display: none;
+        }
+    }
 `
