@@ -48,4 +48,10 @@ const Frame = styled.div`
 	.comment-controls {
 		gap: 12px;
 	}
+	.lance-content-scroller .lance-annotations-container .annotation-ui-wrapper textarea {
+		margin: 0 !important;
+		&:focus-visible {
+			outline: 2px solid blue;
+		}
+	}
 `
