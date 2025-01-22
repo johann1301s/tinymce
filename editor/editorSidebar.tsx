@@ -34,6 +34,7 @@ const Frame = styled.div`
     width: 300px;
     .lance-content-scroller.annotations-aligned .annotation-ui-wrapper .annotation-ui[data-selected='true'] {
         box-shadow: 0 2px 2px -2px rgba(34,47,62,.1),0 8px 8px -4px rgba(34,47,62,.07);
+		border: 1px solid #eee;
     }
     .lance-content-scroller .lance-annotations-container .annotation-ui-wrapper .annotation-ui {
         border-radius: 0;
@@ -51,7 +52,12 @@ const Frame = styled.div`
 	.lance-content-scroller .lance-annotations-container .annotation-ui-wrapper textarea {
 		margin: 0 !important;
 		&:focus-visible {
-			outline: 2px solid blue;
+			outline: 2px solid rgb(43, 122, 212);
 		}
+		width: unset !important;
+		border-radius: 0 !important;
+	}
+	.lance-content-scroller .lance-annotations-container .annotation-ui-wrapper .annotation-ui[data-selected='true'] .annotation-tip {
+		display: none;
 	}
 `

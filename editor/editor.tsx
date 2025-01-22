@@ -81,13 +81,13 @@ const Frame = styled.div`
     display: flex;
     gap: 0;
     background: transparent;
-    border: 2px solid #eee;
+    border: 1px solid #eee;
 `
 
 const EditorWrapper = styled.div`
     flex-grow: 1;
     height: 600px;
-    border-right: 2px solid #eee;
+    border-right: 1px solid #eee;
     .tox-tinymce {
         border: none;
         border-radius: 0;
