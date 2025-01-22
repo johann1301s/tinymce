@@ -39,6 +39,10 @@ const Frame = styled.div`
     .lance-content-scroller .lance-annotations-container .annotation-ui-wrapper .annotation-ui {
         border-radius: 0;
         transition: none;
+		padding: 12px;
+		.comment-reply-container {
+			gap: 12px;
+		}
     }
     .lance-content-scroller {
         border: none;
@@ -48,6 +52,11 @@ const Frame = styled.div`
     }
 	.comment-controls {
 		gap: 12px;
+		margin: 0 !important;
+		padding: 0 !important;
+		.lance-ui-btn {
+			margin: 0 !important;
+		}
 	}
 	.lance-content-scroller .lance-annotations-container .annotation-ui-wrapper textarea {
 		margin: 0 !important;
