@@ -84,5 +84,5 @@ const EditorWrapper = styled.div`
 const Frame = styled.div`
     display: flex;
     gap: 20px;
-    background: red;
+    background: #cdcdcd;
 `
