@@ -38,7 +38,7 @@ export default function Home() {
               id: activeUserId,
               displayName: mockUsers.find((itm) => itm.id === activeUserId)?.name || ''
             }}/>
-            <div style={{wordBreak: 'break-all'}}>{value}</div>
+            <div style={{wordBreak: 'break-all', fontSize: '10px'}}>{value}</div>
         </div>
       </div>
     </div>
