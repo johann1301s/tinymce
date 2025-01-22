@@ -1,6 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { Editor as TEditor } from '@tinymce/tinymce-react';
 import { EditorSidebar } from './editorSidebar';
+import styled from 'styled-components';
 
 type User = {
     id: number;
@@ -42,7 +43,7 @@ export const Editor = (props: Props) => {
 	}, [])
 
     return (
-        <div>
+        <Frame>
             <TEditor
                 apiKey={'tpwemofiiae8simzlmhkevt82ywprtc8szdc80usdo8xdy33'}
                 value={props.value}
@@ -70,6 +71,11 @@ export const Editor = (props: Props) => {
                 <EditorSidebar
                     lance={lance}
                     App={lanceGlobals}/>
-        </div>
+        </Frame>
     );
 };
+
+const Frame = styled.div`
+    display: flex;
+    gap: 20px;
+`
