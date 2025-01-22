@@ -81,7 +81,6 @@ const EditorWrapper = styled.div`
     flex-grow: 1;
 `
 
-
 const Frame = styled.div`
     display: flex;
     gap: 20px;

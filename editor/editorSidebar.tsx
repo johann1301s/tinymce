@@ -26,10 +26,19 @@ export const EditorSidebar = (props: any) => {
 		}
 	}, [sidebarRef, ui, props.lance, props.App])
 	return (
-		<Frame className='sidebar' ref={sidebarRef}/>
+		<Frame ref={sidebarRef}/>
 	);
 }
 
 const Frame = styled.div`
     background: white;
+    width: 300px;
+    .lance-content-scroller.annotations-aligned .annotation-ui-wrapper .annotation-ui[data-selected='true'] {
+        box-shadow: 0 0 0 2px blue;
+    }
+    .lance-content-scroller .lance-annotations-container .annotation-ui-wrapper .annotation-ui {
+        border-radius: 0;
+        transition: none;
+
+    }
 `
