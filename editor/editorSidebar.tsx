@@ -100,6 +100,9 @@ const Frame = styled.div`
 		.lance-annotations-container {
 			min-height: 100% !important;
 		}
+		.annotation-ui-wrapper {
+			padding: 0 !important;
+		}
 	}
 	.comments-search-container {
 		display: none !important;
