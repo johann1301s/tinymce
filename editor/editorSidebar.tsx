@@ -107,4 +107,7 @@ const Frame = styled.div`
 	.comments-search-container {
 		display: none !important;
 	}
+	.lance-content-scroller .lance-annotations-container .annotation-ui-wrapper .annotation-ui[data-selected='true'] .comment-ui .comment-edit-links {
+		gap: 12px;
+	}
 `
