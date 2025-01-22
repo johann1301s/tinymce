@@ -97,4 +97,7 @@ const EditorWrapper = styled.div`
             display: none;
         }
     }
+    .tox .tox-statusbar__resize-handle {
+        display: none;
+    }
 `
