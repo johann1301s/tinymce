@@ -1,25 +1,18 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Editor as TEditor } from '@tinymce/tinymce-react';
 import { EditorSidebar } from './editorSidebar';
 import styled from 'styled-components';
 
-type User = {
-    id: number;
-    name: string;
-    picture: string;
-}
-
-const users: User[] = [
-	{ id: 18, name: "Syd", picture: "/avatars/syd.png" },
-	{ id: 15, name: "David", picture: "/avatars/david.png" },
-	{ id: 21, name: "Mary", picture: "/avatars/mary.png" }
-];
-
 type Props = {
     onChange(value: string): void
     value: string
+    users: Array< {
+        id: number;
+        name: string;
+        picture: string;
+    }>
     user: {
-        id: string
+        id: number
         displayName: string
     }
 }
@@ -28,18 +21,24 @@ export const Editor = (props: Props) => {
 	const editorRef = useRef(null)
 	const [lance, setLance] = useState(null)
 	const [lanceGlobals, setLanceGlobals] = useState(null)
+    const [flite, setFlite] = useState<any>(null);
 
     const onEditorInited = useCallback((evt: any, editor: any) => {
 		editorRef.current = editor;
 		setLance(editor.plugins.lance);
+        setFlite(editor.plugins.flite);
 		editor.on("lance::init", function (event: any) {
 			const lance = event.lance,
 				ann = lance.getAnnotations();
-			ann.addUsers(users);
-			ann.setUserId(users[0].id);
+			ann.addUsers(props.users);
+			ann.setUserId(props.users[0].id);
 			setLanceGlobals(lance.App);
 		});
-	}, [])
+	}, [props.users])
+
+    useEffect(() => {
+        flite?.setUserInfo(props.user.id)
+    }, [props.user.id, flite])
 
     return (
         <Frame>
@@ -67,7 +66,7 @@ export const Editor = (props: Props) => {
                         flite: {
                             isTracking: false,
                             isVisible: false,
-                            users: users.slice(),
+                            users: props.users.slice(),
                             user: { id: props.user.id },
                             tooltips: {
                                 template: '%a by %u, last edit %T'
@@ -98,7 +97,7 @@ const EditorWrapper = styled.div`
         border-radius: 0;
     }
     .tox-statusbar {
-        border-top: 1px solid #a23030 #eee;
+        border-top: 1px solid #eee;
         .tox-statusbar__branding {
             display: none;
         }

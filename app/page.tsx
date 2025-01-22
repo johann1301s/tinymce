@@ -21,7 +21,7 @@ export default function Home() {
       <div style={{width: '100%', maxWidth: '840px'}}>
         <div style={{display: 'flex', flexDirection: 'column', gap: '24px', padding: '0 24px'}}>
           <div style={{alignSelf: 'end', flexGrow: '0'}}>
-            <select onChange={({target}) => setActiveUserId(target.value)} value={activeUserId}>
+            <select onChange={({target}) => setActiveUserId(parseInt(target.value))} value={activeUserId}>
               {mockUsers.map((user) => (
                 <option key={user.id} value={user.id}>
                   {user.name}
@@ -33,6 +33,7 @@ export default function Home() {
             key={activeUserId}
             onChange={(newValue) => setValue(newValue)}
             value={value}
+            users={mockUsers}
             user={{
               id: activeUserId,
               displayName: mockUsers.find((itm) => itm.id === activeUserId)?.name || ''
