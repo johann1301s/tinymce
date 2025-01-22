@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Editor as TEditor } from '@tinymce/tinymce-react';
+import { EditorSidebar } from './editorSidebar';
 
 type User = {
-    id: string;
+    id: number;
     name: string;
     picture: string;
 }
 
 const users: User[] = [
-    { id: '18', name: 'Ola Nordmann', picture: '/avatars/david.png' },
-    { id: '15', name: 'Kari Nordmann', picture: '/avatars/mary.png' }
+	{ id: 18, name: "Syd", picture: "/avatars/syd.png" },
+	{ id: 15, name: "David", picture: "/avatars/david.png" },
+	{ id: 21, name: "Mary", picture: "/avatars/mary.png" }
 ];
+
 
 type Props = {
     onChange(value: string): void
@@ -22,6 +25,21 @@ type Props = {
 }
 
 export const Editor = (props: Props) => {
+	const editorRef = useRef(null)
+	const [lance, setLance] = useState(null)
+	const [lanceGlobals, setLanceGlobals] = useState(null)
+
+    const onEditorInited = useCallback((evt: any, editor: any) => {
+		editorRef.current = editor;
+		setLance(editor.plugins.lance);
+		editor.on("lance::init", function (event: any) {
+			const lance = event.lance,
+				ann = lance.getAnnotations();
+			ann.addUsers(users);
+			ann.setUserId(users[0].id);
+			setLanceGlobals(lance.App);
+		});
+	}, [])
 
     return (
         <div>
@@ -29,12 +47,15 @@ export const Editor = (props: Props) => {
                 apiKey={'tpwemofiiae8simzlmhkevt82ywprtc8szdc80usdo8xdy33'}
                 value={props.value}
                 onEditorChange={props.onChange}
-                toolbar={[ 'flite lance' ]}
-                onPluginLoadError={(err) => console.log(err)}
+                toolbar={[ 'lance', 'flite' ]}
+                onInit={onEditorInited}
                 init={{
                     external_plugins: {
                         lance: '/lance/plugin.min.js',
                         flite: '/flite/plugin.min.js',
+                    },
+                    lance: {
+                        useTextSelection: "all"
                     },
                     flite: {
                         isTracking: false,
@@ -46,6 +67,9 @@ export const Editor = (props: Props) => {
                         }
                     }
                 }}/>
+                <EditorSidebar
+                    lance={lance}
+                    App={lanceGlobals}/>
         </div>
     );
 };
