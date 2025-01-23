@@ -43,7 +43,7 @@ const Scroller = styled.div`
 const fadeToGray = keyframes`
   from {
     background: #F9ECC6;
-	box-shadow: inset 0 0 0 2px #ffd967;
+	box-shadow: inset 0 0 0 2px #ffe69a;
   }
   to {
     background: white;
@@ -61,9 +61,11 @@ const Frame = styled.div`
 		}
 
 		&[data-selected="true"] {
-			background: white;
-			animation-timing-function: ease-out;
-			animation: ${fadeToGray} 3s forwards;
+			background: #F9ECC6;
+			box-shadow: inset 0 0 0 2px #ffe69a;
+
+			// animation-timing-function: ease-out;
+			// animation: ${fadeToGray} 3s forwards;
 		}
 	}
 `
