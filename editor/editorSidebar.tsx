@@ -61,7 +61,8 @@ const Frame = styled.div`
 		}
 
 		&[data-selected="true"] {
-			background: #9ed8ff;
+			background:rgb(193, 230, 255);
+
 			box-shadow: inset 0 0 0 2px #59bdff;
 
 			// animation-timing-function: ease-out;
