@@ -12,11 +12,11 @@ export const EditorSidebar = (props: any) => {
 			return;
 		}
 		if (!ui) {
-			const u = props.App.createAnnotationsUI({ type: "aligned"});
+			const u = props.App.createAnnotationsUI({ type: "simple"});
 			u.init({
 				container: sidebarRef.current,
-				generateUI: true,
-				alignCommentsToEditor: true,
+				generateUI: false,
+				alignCommentsToEditor: false,
 				owner: props.lance.getAnnotations()
 			})
 			setUI(u);
