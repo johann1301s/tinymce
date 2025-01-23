@@ -61,8 +61,8 @@ const Frame = styled.div`
 		}
 
 		&[data-selected="true"] {
-			background: #F9ECC6;
-			box-shadow: inset 0 0 0 2px #ffe69a;
+			background: #9ed8ff;
+			box-shadow: inset 0 0 0 2px #59bdff;
 
 			// animation-timing-function: ease-out;
 			// animation: ${fadeToGray} 3s forwards;

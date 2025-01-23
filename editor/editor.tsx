@@ -106,4 +106,12 @@ const EditorWrapper = styled.div`
     .tox .tox-statusbar__resize-handle {
         display: none;
     }
+    .lance-annotation-class {
+        outline: 10px solid red;
+        &[data-selected="true"] {
+            background: red !important;
+        }
+    }
+
+    // 9ed8ff
 `
