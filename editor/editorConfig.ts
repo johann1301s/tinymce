@@ -2,66 +2,28 @@
 
 type TEditorConfig = {
     contentAreaBg: string
-    toolHoverBg: string
-    toolBg: string
-    toolSelectedBg: string
-    toolSelectedBorderRadius: number
-    toolbarBg: string
-    toolbarDropShadow: string
-    commentsBg: string
-    commentsHeaderBg: string
-    commentsHeaderColor: string
 }
 
 const editorConfig1: TEditorConfig = {
-    contentAreaBg: '#f8f8f8',
-    toolHoverBg: '#f0f0f0',
-    toolSelectedBg: '#a6ccf7',
-    toolSelectedBorderRadius: 3,
-    toolbarBg: '#acacac',
-    toolBg: '#ffffff',
-    toolbarDropShadow: '0 2px 2px -2px rgba(34,47,62,.1), 0 8px 8px -4px rgba(34,47,62,.07)',
-    commentsBg: 'blue',
-    commentsHeaderBg: 'pink',
-    commentsHeaderColor: 'white'
+    contentAreaBg: 'white'
 }
 
 export const editorConfig = editorConfig1
 
 export const contentStyle = `
-body {
-    background: ${editorConfig.contentAreaBg}
-}
+    body {
+        background: ${editorConfig.contentAreaBg}
+    }
+    .lance-annotation-class {
+        border: none !important;
+        border-radius: 0 !important;
+        background:rgb(193, 230, 255) !important;
+    }
+    .lance-annotation-class[data-selected="true"] {
+        background: #9ed8ff !important;
+        box-shadow: inset 0 0 0 2px #59bdff;
+    }
 
-.tox-comments-visible span.tox-comment:not([data-mce-selected]) {
-    background: none;
-    border-radius: 0;
-    border: 2px dashed rgb(212, 177, 0);
-}
-.mce-content-body [data-mce-selected=inline-boundary] {
-    background: none;
-    border-radius: 0;
-    border: 2px dashed rgb(212, 177, 0);
-    box-shadow: none;
-}
-
-.tox-comments-visible span.tox-comment[data-mce-selected] {
-    background: none;
-    border-radius: 0;
-    border: 2px dashed rgb(212, 177, 0);
-    box-shadow: none;
-}
-
-.tox-comment {
-    background: none !important;
-    border-radius: 0;
-    border: 2px dashed rgb(212, 177, 0);
-    box-shadow: none;
-}
-
-.tox-comments-visible .mce-content-body [data-mce-selected=inline-boundary] {
-    background: none;
-}
 
 `
 

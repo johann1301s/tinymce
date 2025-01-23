@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Editor as TEditor } from '@tinymce/tinymce-react';
 import { EditorSidebar } from './editorSidebar';
 import styled from 'styled-components';
+import { contentStyle } from './editorConfig';
 
 type Props = {
     onChange(value: string): void
@@ -55,6 +56,7 @@ export const Editor = (props: Props) => {
                     ]}
                     onInit={onEditorInited}
                     init={{
+                        content_style: contentStyle,
                         height: '100%',
                         menubar: false,
                         external_plugins: {
@@ -106,12 +108,4 @@ const EditorWrapper = styled.div`
     .tox .tox-statusbar__resize-handle {
         display: none;
     }
-    .lance-annotation-class {
-        outline: 10px solid red;
-        &[data-selected="true"] {
-            background: red !important;
-        }
-    }
-
-    // 9ed8ff
 `
