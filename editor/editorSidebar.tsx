@@ -1,7 +1,7 @@
 
 
 import React, { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 
 export const EditorSidebar = (props: any) => {
 	const sidebarRef = useRef(null);
@@ -39,12 +39,28 @@ const Scroller = styled.div`
 	scroll-behavior: smooth;
 `
 
+
+const fadeToGray = keyframes`
+  from {
+    background: #F9ECC6;
+  }
+  to {
+    background: white;
+  }
+`;
+
 const Frame = styled.div`
 	width: 300px;
 	.annotation-ui-wrapper {
 		background: white;
+		.annotation-ui {
+			outline: none;
+		}
+
 		&[data-selected="true"] {
-			background-color: gray;
+			background: white;
+			animation-timing-function: ease-out;
+			animation: ${fadeToGray} 3s forwards;
 		}
 	}
 `
