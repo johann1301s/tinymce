@@ -43,9 +43,12 @@ const Scroller = styled.div`
 const fadeToGray = keyframes`
   from {
     background: #F9ECC6;
+	box-shadow: inset 0 0 0 2px #ffd967;
   }
   to {
     background: white;
+	box-shadow: none;
+
   }
 `;
 
