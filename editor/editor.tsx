@@ -57,7 +57,7 @@ export const Editor = (props: Props) => {
     return (
         <Frame>
             <TEditor
-                apiKey={'tpwemofiiae8simzlmhkevt82ywprtc8szdc80usdo8xdy33'}
+                apiKey={'by4qv2emnp8ycc1kyjn0uklquidsksc96ahp2axcio2uge9d'}
                 onInit={onEditorInited}
                 value={props.value}
                 toolbar={[
