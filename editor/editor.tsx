@@ -1,95 +1,80 @@
-
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Editor as TEditor } from '@tinymce/tinymce-react';
 import styled from 'styled-components';
-import { editorIcons } from './editorIcons';
-import { contentStyle, editorConfig } from './editorConfig';
-
-type User = {
-    id: string;
-    name: string;
-    picture: string;
-}
-
-const users: User[] = [
-    { id: '18', name: 'Ola Nordmann', picture: '/avatars/david.png' },
-    { id: '15', name: 'Kari Nordmann', picture: '/avatars/mary.png' }
-];
+import { editorConfig } from './editorConfig';
 
 type Props = {
-    onChange(value: string): void
-    value: string
+    onChange(value: string): void;
+    value: string;
     user: {
-        id: string
-        displayName: string
-    }
-}
+        id: string;
+        displayName: string;
+    };
+};
 
 export const Editor = (props: Props) => {
     const editorRef = useRef<any>(null);
-    const [flite, setFlite] = useState<any>(null);
 
-    const onEditorInited = useCallback((evt: unknown, editor: any) => {
-        editorRef.current = editor;
-        Object.entries(editorIcons).forEach(([key, entry]) => {
-            editor.ui.registry.addIcon(key, entry)
-        })
-        setFlite(editor.plugins.flite);
-        editor.on('flite:showHide', (event: any) => {
-            if (event.show) {
-                // hide comments
+const addAnnotation = () => {
+    if (editorRef.current) {
+        const editor = editorRef.current;
+        const selectedText = editor.selection.getContent({ format: 'text' });
+
+        if (selectedText) {
+            const rng = editor.selection.getRng();
+            const span = document.createElement('span');
+            span.style.backgroundColor = 'yellow';
+            span.dataset.annotation = 'true';
+            span.title = 'This is an annotation';
+
+            rng.surroundContents(span);
+
+            // Insert a zero-width space after the annotation
+            const zwsp = document.createTextNode('\u200B');
+            if (span.parentNode) {
+                span.parentNode.insertBefore(zwsp, span.nextSibling);
             }
-        })
-        editor.on('flite:init', (event: any) => {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const flite = event.flite;
 
-        });
-    }, []);
+            // Move the cursor after the zero-width space
+            const newRange = document.createRange();
+            newRange.setStartAfter(zwsp);
+            newRange.collapse(true);
 
-    useEffect(() => {
-        flite?.setUserInfo(props.user.id)
-        // const username = users.find(({id}) => props.activeUserId == id)?.name
-        // editorRef.current?.options.set('tinycomments_author', username)
-        // editorRef.current?.options.set('tinycomments_author_name', username)
-    }, [props.user.id, flite])
-
+            const sel = window.getSelection();
+            if (sel) {
+                sel.removeAllRanges();
+                sel.addRange(newRange);
+            }
+        } else {
+            alert('Please select some text to annotate.');
+        }
+    }
+};
     return (
         <Frame>
+            <button onClick={addAnnotation}>Add Annotation</button>
             <TEditor
                 apiKey={'by4qv2emnp8ycc1kyjn0uklquidsksc96ahp2axcio2uge9d'}
-                onInit={onEditorInited}
+                onEditorChange={props.onChange}
                 value={props.value}
-                toolbar={[
-                    'bold italic underline strikethrough | redo undo | removeformat | alignleft aligncenter alignright alignjustify',
-                    'flite-toggletracking flite-toggleshow flite-acceptall flite-rejectall flite-acceptone flite-rejectone | addcomment showcomments'
-                ]}
+                toolbar={['bold']}
+                onInit={(evt, editor) => (editorRef.current = editor)}
                 init={{
                     height: 500,
                     menubar: false,
-                    content_style: contentStyle,
-                    plugins: ['tinycomments'],
-                    external_plugins: { flite: '/flite/plugin.min.js' },
-                    flite: {
-                        isTracking: false,
-                        isVisible: false,
-                        users: users.slice(),
-                        user: { id: props.user.id },
-                        tooltips: {
-                            template: '%a by %u, last edit %T'
-                        }
-                    },
-                    tinycomments_mode: 'embedded',
-                    tinycomments_author: props.user.id,
-                    tinycomments_author_name: props.user.displayName,
+                    plugins: 'code',
                 }}
-                onEditorChange={props.onChange}
             />
         </Frame>
     );
 };
 
 const Frame = styled.div`
+    button {
+        margin-bottom: 10px;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
     .tox-tinymce {
         border: none;
         border-radius: 0;
@@ -107,9 +92,9 @@ const Frame = styled.div`
             background-color: ${editorConfig.toolbarBg} !important;
             .tox-toolbar-overlord {
                 background-color: ${editorConfig.toolbarBg} !important;
-                & > [class^="tox-toolbar"] {
+                & > [class^='tox-toolbar'] {
                     background-color: ${editorConfig.toolbarBg} !important;
-                    font-family: "Nunito";
+                    font-family: 'Nunito';
                     .tox-toolbar__group {
                         .tox-tbtn {
                             cursor: pointer;
@@ -119,15 +104,13 @@ const Frame = styled.div`
                             &:hover {
                                 background: ${editorConfig.toolHoverBg};
                             }
-                            &--enabled, &--enabled:hover {
+                            &--enabled,
+                            &--enabled:hover {
                                 background: ${editorConfig.toolSelectedBg};
                             }
                         }
                     }
                 }
-            }
-            .tox-anchorbar {
-                
             }
         }
         .tox-sidebar-wrap {
@@ -144,14 +127,11 @@ const Frame = styled.div`
                     .tox-conversations__header {
                         background: ${editorConfig.commentsHeaderBg};
                         .tox-conversations__title {
-                            color: ${editorConfig.commentsHeaderColor};;
+                            color: ${editorConfig.commentsHeaderColor};
                         }
                     }
                 }
             }
         }
-        .tox-bottom-anchorbar {
-
-        }
     }
-`
+`;

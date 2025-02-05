@@ -29,7 +29,6 @@ export default function Home() {
               ))}
             </select>
           </div>
-          <textarea id="mytextarea"/>
           <Editor
             key={activeUserId}
             onChange={(newValue) => setValue(newValue)}
