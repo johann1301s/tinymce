@@ -1,45 +1,22 @@
 'use client'
 
-import { Editor } from '@/editor/editor'
-import { mockUsers } from '@/lib/mockUsers'
+import axios from 'axios'
 import { useState } from 'react'
 
 export default function Home() {
-  const [value, setValue] = useState('')
-  const [activeUserId, setActiveUserId] = useState(mockUsers[0].id)
+  const [res, setRes] = useState<any>()
+
+  const getData = async () => {
+      const {data} = await axios.get('/api/advokatregisteret')
+      setRes(data)
+  }
 
   return (
-    <div
-      style={{
-        position: 'relative',
-        width: '100%',
-        boxSizing: 'border-box',
-        padding: '24px',
-        display: 'flex',
-        justifyContent: 'center'
-      }}>
-      <div style={{width: '100%', maxWidth: '840px'}}>
-        <div style={{display: 'flex', flexDirection: 'column', gap: '24px', padding: '0 24px'}}>
-          <div style={{alignSelf: 'end', flexGrow: '0'}}>
-            <select onChange={({target}) => setActiveUserId(target.value)} value={activeUserId}>
-              {mockUsers.map((user) => (
-                <option key={user.id} value={user.id}>
-                  {user.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <Editor
-            key={activeUserId}
-            onChange={(newValue) => setValue(newValue)}
-            value={value}
-            user={{
-              id: activeUserId,
-              displayName: mockUsers.find((itm) => itm.id === activeUserId)?.name || ''
-            }}/>
-            <div style={{wordBreak: 'break-all'}}>{value}</div>
-        </div>
-      </div>
+    <div>
+      <button onClick={() => getData()}>Hent data fra advokatregisteret</button>
+      <pre>
+        {JSON.stringify(res, null, 4)}
+      </pre>
     </div>
   )
 }
