@@ -45,6 +45,8 @@ const addAnnotation = () => {
                 sel.removeAllRanges();
                 sel.addRange(newRange);
             }
+            props.onChange(editor.getContent());
+
         } else {
             alert('Please select some text to annotate.');
         }
