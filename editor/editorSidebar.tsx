@@ -61,6 +61,11 @@ const Frame = styled.div`
 			.annotation-filtered {
 				display: none;
 			}
+			.annotation-comments {
+				div[data-comment-first='true'] {
+					background: rgb(201, 201, 201);
+				}
+			}
 		}
 
 		&[data-selected="true"] {
