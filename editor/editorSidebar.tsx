@@ -58,6 +58,9 @@ const Frame = styled.div`
 		background: white;
 		.annotation-ui {
 			outline: none;
+			.annotation-filtered {
+				display: none;
+			}
 		}
 
 		&[data-selected="true"] {
