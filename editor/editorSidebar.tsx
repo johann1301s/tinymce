@@ -65,6 +65,9 @@ const Frame = styled.div`
 				div[data-comment-first='true'] {
 					background: rgb(201, 201, 201);
 				}
+				.comment-ui {
+					padding: 10px;
+				}
 			}
 		}
 
