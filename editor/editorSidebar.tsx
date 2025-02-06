@@ -69,6 +69,27 @@ const Frame = styled.div`
 					padding: 10px;
 				}
 			}
+			.comment-reply-container {
+				background-color: red;
+				.comment-controls {
+					button[data-lance-command='comment-reply-ok'] {
+						&:before {
+							content: "OK";
+						}
+						span {
+							display: none;
+						}
+					}
+					button[data-lance-command='comment-reply-cancel'] {
+						&:before {
+							content: "CANCEL";
+						}
+						span {
+							display: none;
+						}
+					}
+				}
+			}
 		}
 
 		&[data-selected="true"] {
