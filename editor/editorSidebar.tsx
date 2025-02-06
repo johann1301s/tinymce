@@ -67,6 +67,19 @@ const Frame = styled.div`
 				}
 				.comment-ui {
 					padding: 10px;
+					.comment-text {
+						background-color: red;
+					}
+					.comment-edit-controls {
+						button[data-lance-command='comment-edit-ok'] {
+							&:before {
+								content: "OK";
+							}
+							span {
+								display: none;
+							}
+						}
+					}
 				}
 			}
 			.comment-reply-container {
