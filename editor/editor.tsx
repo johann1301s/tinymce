@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Editor as TEditor } from '@tinymce/tinymce-react';
+import { contentStyle } from './editorConfig';
 
 type Props = {
     onChange(value: string): void;
@@ -24,6 +25,7 @@ export const Editor = (props: Props) => {
                     height: 500,
                     menubar: false,
                     inline_boundaries: false,
+                    content_style: contentStyle,
                     setup: (editor) => {
                         editor.ui.registry.addButton('annotate-alpha', {
                           text: 'Annotate',
@@ -46,6 +48,7 @@ export const Editor = (props: Props) => {
                               })
                             });
                         });
+        
                     }
                 }}
             />

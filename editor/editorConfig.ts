@@ -33,34 +33,8 @@ body {
     background: ${editorConfig.contentAreaBg}
 }
 
-.tox-comments-visible span.tox-comment:not([data-mce-selected]) {
-    background: none;
-    border-radius: 0;
-    border: 2px dashed rgb(212, 177, 0);
-}
-.mce-content-body [data-mce-selected=inline-boundary] {
-    background: none;
-    border-radius: 0;
-    border: 2px dashed rgb(212, 177, 0);
-    box-shadow: none;
-}
-
-.tox-comments-visible span.tox-comment[data-mce-selected] {
-    background: none;
-    border-radius: 0;
-    border: 2px dashed rgb(212, 177, 0);
-    box-shadow: none;
-}
-
-.tox-comment {
-    background: none !important;
-    border-radius: 0;
-    border: 2px dashed rgb(212, 177, 0);
-    box-shadow: none;
-}
-
-.tox-comments-visible .mce-content-body [data-mce-selected=inline-boundary] {
-    background: none;
+.mce-annotation {
+    color: red;
 }
 
 `
