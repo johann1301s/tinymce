@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { Editor as TEditor } from '@tinymce/tinymce-react';
 import { contentStyle } from './editorConfig';
@@ -13,43 +13,46 @@ type Props = {
 };
 
 export const Editor = (props: Props) => {
+    const ref = useRef<any>(null);
+
+    const annotate = () => {
+        const editor = ref.current
+        if (!editor) return
+
+        const selectedText = editor.selection.getContent({ format: 'text' });
+        const rng = editor.selection.getRng();
+        const span = document.createElement('span');
+        span.style.background = 'red'
+        rng.surroundContents(span);
+
+
+        //console.log(rng)
+    }
 
     return (
         <Frame>
+            <button onClick={() => annotate()}>Annotate</button>
             <TEditor
                 apiKey={'by4qv2emnp8ycc1kyjn0uklquidsksc96ahp2axcio2uge9d'}
-                onEditorChange={props.onChange}
+    
                 value={props.value}
-                toolbar={['annotate-alpha']}
+                onInit={(evt, editor) => (ref.current = editor)}
                 init={{
                     height: 500,
                     menubar: false,
-                    inline_boundaries: false,
                     content_style: contentStyle,
+                    inline_boundaries: false,
                     setup: (editor) => {
-                        editor.ui.registry.addButton('annotate-alpha', {
-                          text: 'Annotate',
-                          onAction: () => {
-                            const comment = prompt('Comment with?');
-                            editor.annotator.annotate('alpha', {
-                              comment
-                            });
-                            editor.focus();
+                        editor.on('beforeinput', (event) => {
+                            const rng = editor.selection.getRng();
+                            const cursorIsAtBeginningOrEndOfAnnotation = true // implement here chatgpt...
+                            // the annotation is just a span with a style attrubute
+
+                          if (cursorIsAtBeginningOrEndOfAnnotation) {
+                            event.preventDefault(); // Blocks the change
                           }
-                        })
-                        editor.on('init', () => {
-                            editor.annotator.register('alpha', {
-                              persistent: true,
-                              decorate: (uid, data) => ({
-                                attributes: {
-                                  'data-mce-comment': data.comment ? data.comment : '',
-                                  'data-mce-author': data.author ? data.author : 'anonymous'
-                                }
-                              })
-                            });
                         });
-        
-                    }
+                      }
                 }}
             />
         </Frame>
