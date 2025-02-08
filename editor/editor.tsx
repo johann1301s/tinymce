@@ -49,18 +49,21 @@ export const Editor = (props: Props) => {
                         
                             const inputType = event.inputType; // Detect if it's backspace, delete, or typing
                             const data = event.data || "";
-                        
-                            event.preventDefault(); // Temporarily block the event
-                        
-                            setTimeout(() => {
-                                editor.undoManager.transact(() => {
-                                    if (inputType === "insertText") {
-                                        editor.execCommand("mceInsertContent", false, data);
-                                    } else if (inputType === "deleteContentBackward" || inputType === "deleteContentForward") {
-                                        editor.execCommand("Delete");
-                                    }
-                                });
-                            }, 0);
+
+                            const wierd = ['insertText', 'deleteContentBackward', 'deleteContentForward'].includes(inputType)
+
+                            if (wierd) {
+                                event.preventDefault(); // Temporarily block the event
+                                setTimeout(() => {
+                                    editor.undoManager.transact(() => {
+                                        if (inputType === "insertText") {
+                                            editor.execCommand("mceInsertContent", false, data);
+                                        } else if (inputType === "deleteContentBackward" || inputType === "deleteContentForward") {
+                                            editor.execCommand("Delete");
+                                        }
+                                    });
+                                }, 0);
+                            }
                         });
                       }
                 }}
