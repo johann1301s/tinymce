@@ -44,13 +44,23 @@ export const Editor = (props: Props) => {
                     inline_boundaries: false,
                     setup: (editor) => {
                         editor.on('beforeinput', (event) => {
-                            const rng = editor.selection.getRng();
-                            const cursorIsAtBeginningOrEndOfAnnotation = true // implement here chatgpt...
-                            // the annotation is just a span with a style attrubute
-
-                          if (cursorIsAtBeginningOrEndOfAnnotation) {
-                            event.preventDefault(); // Blocks the change
-                          }
+                            const rng = editor.selection.getRng(); // Capture initial selection
+                            console.log("Captured selection:", rng.startOffset, rng.endOffset, event.inputType);
+                        
+                            const inputType = event.inputType; // Detect if it's backspace, delete, or typing
+                            const data = event.data || "";
+                        
+                            event.preventDefault(); // Temporarily block the event
+                        
+                            setTimeout(() => {
+                                editor.undoManager.transact(() => {
+                                    if (inputType === "insertText") {
+                                        editor.execCommand("mceInsertContent", false, data);
+                                    } else if (inputType === "deleteContentBackward" || inputType === "deleteContentForward") {
+                                        editor.execCommand("Delete");
+                                    }
+                                });
+                            }, 0);
                         });
                       }
                 }}
