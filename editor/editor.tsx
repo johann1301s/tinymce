@@ -23,6 +23,10 @@ export const Editor = (props: Props) => {
         const rng = editor.selection.getRng();
         const span = document.createElement('span');
         span.style.background = 'red'
+        span.style.outline = 'none'
+        span.dataset.annotation = 'true'
+
+        span.id = '1'
         rng.surroundContents(span);
 
 
@@ -45,25 +49,22 @@ export const Editor = (props: Props) => {
                     setup: (editor) => {
                         editor.on('beforeinput', (event) => {
                             const rng = editor.selection.getRng(); // Capture initial selection
-                            console.log("Captured selection:", rng.startOffset, rng.endOffset, event.inputType);
-                        
-                            const inputType = event.inputType; // Detect if it's backspace, delete, or typing
-                            const data = event.data || "";
+                            const startOffset = rng.startOffset
+                            const endOffset = rng.endOffset
+                            const collapsed = rng.collapsed
+                            const commonAncestorContainer = rng.commonAncestorContainer
+                            const endContainer = rng.endContainer
+                            const startContainer = rng.startContainer
+                            
+                            const annotation = commonAncestorContainer.parentNode.dataset.annotation
 
-                            const wierd = ['insertText', 'deleteContentBackward', 'deleteContentForward'].includes(inputType)
 
-                            if (wierd) {
-                                event.preventDefault(); // Temporarily block the event
-                                setTimeout(() => {
-                                    editor.undoManager.transact(() => {
-                                        if (inputType === "insertText") {
-                                            editor.execCommand("mceInsertContent", false, data);
-                                        } else if (inputType === "deleteContentBackward" || inputType === "deleteContentForward") {
-                                            editor.execCommand("Delete");
-                                        }
-                                    });
-                                }, 0);
+
+                            if (annotation === 'true') {
+                                console.log('edited comment')
                             }
+
+                                
                         });
                       }
                 }}
