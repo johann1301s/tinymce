@@ -57,7 +57,7 @@ export const Editor = (props: Props) => {
     return (
         <Frame>
             <TEditor
-                apiKey={'by4qv2emnp8ycc1kyjn0uklquidsksc96ahp2axcio2uge9d'}
+                apiKey={'wv7h8rks6zlpna38ntsth488b12e9p4dfz0q240ukh1zh73x'}
                 onInit={onEditorInited}
                 value={props.value}
                 toolbar={[
@@ -129,6 +129,9 @@ const Frame = styled.div`
             .tox-anchorbar {
                 
             }
+        }
+        .tox-sidebar__slider {
+            transition: none;
         }
         .tox-sidebar-wrap {
             .tox-edit-area {

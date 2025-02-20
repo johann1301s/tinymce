@@ -62,6 +62,16 @@ body {
 .tox-comments-visible .mce-content-body [data-mce-selected=inline-boundary] {
     background: none;
 }
+.FLITE-Tracking  {
+    .ice-del {
+        outline: 4px solid red;
+        background: unset !important;
+    }
+    .ice-ins {
+        outline: 4px solid blue;
+        background: unset !important;
+    }
+}
 
 `
 
