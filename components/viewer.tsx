@@ -2,8 +2,10 @@
 
 // components/PdfViewer.tsx
 import { Document, Page } from 'react-pdf';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { pdfjs } from 'react-pdf';
+import 'react-pdf/dist/Page/TextLayer.css';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
@@ -19,15 +21,19 @@ const PdfViewer = ({ file }: { file: File }) => {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', padding: '0 20px' }}>
-      <div style={{ maxWidth: '100%', overflow: 'hidden', padding: '20px 0' }}>
+    <Fragment>
+    <div style={{ background: 'black', display: 'flex', justifyContent: 'center', padding: '0 20px' }}>
+      <div style={{ background: 'white', height: '300px', width: '300px', maxWidth: '100%', overflow: 'hidden', padding: '20px 0' }}>
         <Document
+          loading={'you'}
           file={URL.createObjectURL(file)}
           onLoadSuccess={onLoadSuccess}
         >
-          <Page pageNumber={pageNumber} width={300} />
+          <Page pageNumber={pageNumber} width={300}/>
         </Document>
-        <div style={{ textAlign: 'center' }}>
+      </div>
+    </div>
+    <div style={{ textAlign: 'center' }}>
           <button
             disabled={pageNumber <= 1}
             onClick={() => setPageNumber(pageNumber - 1)}
@@ -46,8 +52,7 @@ const PdfViewer = ({ file }: { file: File }) => {
             Next
           </button>
         </div>
-      </div>
-    </div>
+    </Fragment>
   );
 };
 
